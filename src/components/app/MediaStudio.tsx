@@ -264,7 +264,7 @@ export function MediaStudio({
                   if (m.id === "manual") setOpen(true);
                 }}
                 className={cn(
-                  "rounded-xl px-2.5 py-1.5 text-[0.7rem] font-bold transition-colors",
+                  "inline-flex min-h-8 items-center rounded-xl px-2.5 py-1.5 text-[0.7rem] font-bold transition-colors",
                   imageMode === m.id
                     ? "bg-foreground text-background"
                     : "text-muted-foreground hover:bg-secondary",
@@ -303,7 +303,7 @@ export function MediaStudio({
                 type="button"
                 aria-label="إزالة المرفق"
                 onClick={() => onAttachmentsChange(attachments.filter((x) => x.url !== a.url))}
-                className="absolute inset-x-0 bottom-0 bg-foreground/80 py-0.5 text-center text-background opacity-0 transition-opacity group-hover:opacity-100"
+                className="absolute inset-x-0 bottom-0 grid min-h-6 place-items-center bg-foreground/80 text-background opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100"
               >
                 <X className="mx-auto size-3" />
               </button>
@@ -331,7 +331,7 @@ export function MediaStudio({
                     attachments.length >= MAX_ATTACHMENTS
                   }
                   onClick={() => fileInput.current?.click()}
-                  className="inline-flex items-center gap-1 rounded-lg bg-foreground px-3 py-1.5 text-[0.68rem] font-bold text-background disabled:opacity-40"
+                  className="inline-flex min-h-9 items-center gap-1 rounded-lg bg-foreground px-3 py-1.5 text-[0.68rem] font-bold text-background disabled:opacity-40"
                 >
                   {uploading > 0 ? (
                     <Loader2 className="size-3 animate-spin" />
@@ -349,7 +349,7 @@ export function MediaStudio({
                     attachments.length >= MAX_ATTACHMENTS
                   }
                   onClick={() => docInput.current?.click()}
-                  className="inline-flex items-center gap-1 rounded-lg border border-border px-3 py-1.5 text-[0.68rem] font-bold hover:bg-secondary disabled:opacity-40"
+                  className="inline-flex min-h-9 items-center gap-1 rounded-lg border border-border px-3 py-1.5 text-[0.68rem] font-bold hover:bg-secondary disabled:opacity-40"
                 >
                   <Paperclip className="size-3" /> ملفات
                 </button>
@@ -362,7 +362,7 @@ export function MediaStudio({
                     attachments.length >= MAX_ATTACHMENTS
                   }
                   onClick={() => cameraInput.current?.click()}
-                  className="inline-flex items-center gap-1 rounded-lg border border-border px-3 py-1.5 text-[0.68rem] font-bold hover:bg-secondary disabled:opacity-40"
+                  className="inline-flex min-h-9 items-center gap-1 rounded-lg border border-border px-3 py-1.5 text-[0.68rem] font-bold hover:bg-secondary disabled:opacity-40"
                 >
                   <Camera className="size-3" /> كاميرا
                 </button>
