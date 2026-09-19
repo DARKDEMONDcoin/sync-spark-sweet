@@ -155,6 +155,7 @@ function systemFor(
       profile: ctx.ws.profile,
       website: ctx.ws.website,
       country: ctx.ws.country,
+      dialect,
     }),
     `## العلامة\nالاسم: ${ctx.ws.name} · المجال: ${ctx.ws.industry} · النبرة: ${ctx.ws.tone} · اللهجة المطلوبة: ${dialect}` +
       (ctx.ws.banned_words?.length ? `\nكلمات ممنوعة: ${ctx.ws.banned_words.join("، ")}` : ""),
