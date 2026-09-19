@@ -327,14 +327,17 @@ export function sharedSystemBlocks(params: {
   profile?: unknown;
   website?: string | null | undefined;
   country?: string | null | undefined;
+  dialect?: string | null | undefined;
 }): string[] {
   return [
     masteryStandard,
     operatingPrinciples,
-    languageBlock(params.country),
+    languageBlock(params.country, params.dialect),
     businessProfileBlock(params.profile, params.website, params.country),
     teamDirectoryBlock(params.employeeId),
     handoffBlock(params.employeeId),
+    platformLimitsBlock(params.employeeId),
+    complianceBlock(params.employeeId),
     integrationPolicyBlock(params.employeeId, params.connected),
     `## المنصة\n${platformMap}`,
   ].filter(Boolean);
