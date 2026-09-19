@@ -349,6 +349,7 @@ export function sharedSystemBlocks(params: {
   dialect?: string | null | undefined;
 }): string[] {
   return [
+    authorityBlock,
     masteryStandard,
     operatingPrinciples(params.employeeId),
     languageBlock(params.country, params.dialect),
