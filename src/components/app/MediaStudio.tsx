@@ -480,8 +480,9 @@ export function MediaStudio({
             <button
               type="button"
               onClick={() => setLiteral((v) => !v)}
+              aria-pressed={literal}
               className={cn(
-                "inline-flex items-center gap-1 rounded-xl border px-2.5 py-1.5 text-[0.68rem] font-bold transition-colors",
+                "inline-flex min-h-9 items-center gap-1 rounded-xl border px-2.5 py-1.5 text-[0.68rem] font-bold transition-colors",
                 literal ? "border-primary/50 bg-primary/10" : "border-border text-muted-foreground",
               )}
               title="مطابقة حرفية لوصفك بدل إعادة صياغته"
