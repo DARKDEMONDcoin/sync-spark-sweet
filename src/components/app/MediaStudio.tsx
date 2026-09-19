@@ -446,8 +446,9 @@ export function MediaStudio({
                   key={a.id}
                   type="button"
                   onClick={() => onAspectChange(a.id)}
+                  aria-pressed={aspect === a.id}
                   className={cn(
-                    "rounded-lg px-2 py-1 text-[0.68rem] font-bold transition-colors",
+                    "inline-flex min-h-9 items-center rounded-lg px-2.5 py-1 text-[0.68rem] font-bold transition-colors",
                     aspect === a.id
                       ? "bg-foreground text-background"
                       : "text-muted-foreground hover:bg-secondary",
