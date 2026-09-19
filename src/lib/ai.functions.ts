@@ -702,6 +702,7 @@ export async function runEmployeeTurn(
         profile: ws.profile,
         website: ws.website,
         country: ws.country,
+        dialect: ownerDialect,
       }),
       brainText ? `## عقل العلامة (ذاكرة مشتركة بين الفريق)\n${brainText}` : "",
       teamActivity ? `## آخر ما أنجزه الفريق\n${teamActivity}` : "",
