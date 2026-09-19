@@ -67,6 +67,8 @@ export const employeeDirectory: Record<
       { provider: "whatsapp", label: "واتساب", why: "متابعات سريعة" },
       { provider: "slack", label: "Slack", why: "ملخصات الفريق" },
       { provider: "notion", label: "Notion", why: "توثيق المحاضر والمهام" },
+      { provider: "zoom", label: "Zoom", why: "إنشاء روابط الاجتماعات وجدولتها" },
+
     ],
     handsOffTo: "رسائل المبيعات والعروض → سالم. أي محتوى تسويقي → سِراج أو نور.",
   },
