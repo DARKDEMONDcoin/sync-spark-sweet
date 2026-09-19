@@ -43003,7 +43003,8 @@ html {
   flex: 1;
 }
 .ads-campaign-line {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -43018,8 +43019,15 @@ html {
 }
 .ads-campaign-line b {
   flex: none;
+  min-width: 0;
+  overflow-wrap: anywhere;
   color: color-mix(in oklab, var(--background) 62%, transparent);
   font-size: 0.66rem;
+}
+@media (min-width: 640px) {
+  .ads-campaign-line {
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto);
+  }
 }
 .ads-campaign-track {
   display: block;

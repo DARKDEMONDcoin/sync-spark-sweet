@@ -40,7 +40,7 @@ export function Thinking({
 
       <div
         className={cn(
-          "order-1 min-w-0 rounded-3xl rounded-se-lg border border-border bg-card px-4 py-3 shadow-sm",
+          "order-1 min-w-0 [overflow-wrap:anywhere] rounded-3xl rounded-se-lg border border-border bg-card px-4 py-3 shadow-sm",
           streaming || step ? "chat-thinking-content max-w-[min(46rem,82%)]" : "",
         )}
       >
@@ -50,7 +50,7 @@ export function Thinking({
             className="mb-1.5 flex min-w-0 items-center gap-2 text-[0.72rem] font-semibold text-muted-foreground"
           >
             <span className="size-1.5 shrink-0 rounded-full bg-primary think-dot" aria-hidden />
-            <span className="min-w-0 break-words">{step}</span>
+            <span className="min-w-0 [overflow-wrap:anywhere]">{step}</span>
           </p>
         ) : null}
 
