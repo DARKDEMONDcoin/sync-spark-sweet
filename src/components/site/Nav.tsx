@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   BarChart3,
@@ -80,19 +80,48 @@ const groups = [
   },
 ] as const;
 
-export function Nav({ variant: _variant = "over" }: { variant?: "over" | "solid" }) {
+export function Nav({ variant = "over" }: { variant?: "over" | "solid" }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
+  const frame = useRef<number | null>(null);
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 18);
+    const onScroll = () => {
+      if (frame.current !== null) return;
+
+      frame.current = window.requestAnimationFrame(() => {
+        const currentScrollY = Math.max(window.scrollY, 0);
+        const delta = currentScrollY - lastScrollY.current;
+
+        setScrolled(currentScrollY > 18);
+
+        if (variant === "solid") {
+          if (currentScrollY <= 18 || delta < -6) setHidden(false);
+          else if (delta > 6 && currentScrollY > 96) setHidden(true);
+        }
+
+        lastScrollY.current = currentScrollY;
+        frame.current = null;
+      });
+    };
+
+    lastScrollY.current = Math.max(window.scrollY, 0);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame.current !== null) window.cancelAnimationFrame(frame.current);
+    };
+  }, [variant]);
+
+  const navHidden = variant === "solid" && hidden && !mobileOpen && active === null;
+
   return (
     <header
-      className={`sahl-white-nav${scrolled ? " is-scrolled" : ""}`}
+      className={`sahl-white-nav${scrolled ? " is-scrolled" : ""}${navHidden ? " is-hidden" : ""}`}
       dir="rtl"
       onMouseLeave={() => setActive(null)}
       onKeyDown={(event) => {
