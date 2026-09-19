@@ -690,6 +690,7 @@ export async function runEmployeeTurn(
       scopeBoundaryBlock(data.employeeId, data.message),
       sirajMemory,
       nourMemory,
+      genericMemory,
       decisionsMemory,
       learning.block,
       qualityCriteria[data.employeeId]?.length
