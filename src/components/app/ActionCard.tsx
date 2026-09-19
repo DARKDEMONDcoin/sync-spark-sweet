@@ -53,7 +53,9 @@ export function ActionCard({
     return (
       <div className="mt-3 flex items-center gap-3 rounded-2xl border border-mint/30 bg-mint/10 px-4 py-3 text-sm font-semibold animate-pop-in">
         <AppIcon name={action.provider} className="size-5 shrink-0" />
-        <span>تم تنفيذ «{action.label}» فعلياً على {appLabel(action.provider)}.</span>
+        <span>
+          تم تنفيذ «{action.label}» فعلياً على {appLabel(action.provider)}.
+        </span>
       </div>
     );
   }

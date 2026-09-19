@@ -58,9 +58,15 @@ export function Markdown({
           h4: ({ children }) => <h4 dir="auto">{children}</h4>,
           h5: ({ children }) => <h5 dir="auto">{children}</h5>,
           h6: ({ children }) => <h6 dir="auto">{children}</h6>,
-          pre: ({ children }) => <pre dir="ltr" tabIndex={0}>{children}</pre>,
+          pre: ({ children }) => (
+            <pre dir="ltr" tabIndex={0}>
+              {children}
+            </pre>
+          ),
           code: ({ children, className: codeClass }) => (
-            <code dir="auto" className={cn("[unicode-bidi:isolate]", codeClass)}>{children}</code>
+            <code dir="auto" className={cn("[unicode-bidi:isolate]", codeClass)}>
+              {children}
+            </code>
           ),
           table: ({ children }) => (
             <div
