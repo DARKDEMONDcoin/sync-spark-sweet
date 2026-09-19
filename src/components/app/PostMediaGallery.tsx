@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { ChevronLeft, ChevronRight, Expand, ImageOff, Trash2, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ export function PostMediaGallery({ media, onRemove, onError }: Props) {
   const [index, setIndex] = useState(0);
   const [viewer, setViewer] = useState(false);
   const touchX = useRef<number | null>(null);
+  const expandRef = useRef<HTMLButtonElement>(null);
   const current = media[Math.min(index, Math.max(0, media.length - 1))];
 
   useEffect(() => {
@@ -38,10 +39,8 @@ export function PostMediaGallery({ media, onRemove, onError }: Props) {
       if (event.key === "ArrowLeft") move(1);
       if (event.key === "ArrowRight") move(-1);
     };
-    document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
   }, [viewer, move]);
@@ -84,6 +83,7 @@ export function PostMediaGallery({ media, onRemove, onError }: Props) {
       {!fullscreen ? (
         <>
           <Button
+            ref={expandRef}
             type="button"
             variant="secondary"
             size="icon-sm"
@@ -144,14 +144,18 @@ export function PostMediaGallery({ media, onRemove, onError }: Props) {
       <div className="post-media-gallery">
         {stage()}
         {media.length > 1 ? (
-          <div className="post-media-strip" role="tablist" aria-label="وسائط المنشور">
+          <div className="post-media-strip" role="group" aria-label="وسائط المنشور">
             {media.map((item, itemIndex) => (
               <div key={item.url} className="post-media-thumb-wrap">
-                <button
+                <Button
                   type="button"
-                  role="tab"
-                  aria-selected={itemIndex === index}
-                  className={cn("post-media-thumb", itemIndex === index && "is-active")}
+                  variant="ghost"
+                  aria-label={item.label || `عرض الوسيطة ${itemIndex + 1}`}
+                  aria-pressed={itemIndex === index}
+                  className={cn(
+                    "post-media-thumb h-auto shrink-0 p-0",
+                    itemIndex === index && "is-active",
+                  )}
                   onClick={() => setIndex(itemIndex)}
                 >
                   {item.kind === "image" ? (
@@ -159,46 +163,49 @@ export function PostMediaGallery({ media, onRemove, onError }: Props) {
                   ) : (
                     <video src={item.url} muted preload="metadata" />
                   )}
-                </button>
+                </Button>
                 {onRemove ? (
-                  <button
+                  <Button
                     type="button"
+                    variant="destructive"
                     className="post-media-thumb-remove"
                     onClick={() => onRemove(item.url)}
                     aria-label={`حذف الوسيطة ${itemIndex + 1}`}
                     title="حذف"
                   >
                     <X className="size-3" strokeWidth={3} />
-                  </button>
+                  </Button>
                 ) : null}
               </div>
             ))}
           </div>
         ) : null}
       </div>
-      {viewer && typeof document !== "undefined"
-        ? createPortal(
-            <div
-              className="post-media-lightbox"
-              role="dialog"
-              aria-modal="true"
-              aria-label="معاينة الوسائط كاملة"
+      <DialogPrimitive.Root open={viewer} onOpenChange={setViewer}>
+        <DialogPrimitive.Portal>
+          <DialogPrimitive.Content
+            className="post-media-lightbox"
+            aria-describedby={undefined}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              expandRef.current?.focus();
+            }}
+          >
+            <DialogPrimitive.Title className="sr-only">معاينة الوسائط كاملة</DialogPrimitive.Title>
+            <Button
+              type="button"
+              variant="secondary"
+              size="icon"
+              className="post-media-close"
+              onClick={() => setViewer(false)}
+              aria-label="إغلاق المعاينة"
             >
-              <Button
-                type="button"
-                variant="secondary"
-                size="icon"
-                className="post-media-close"
-                onClick={() => setViewer(false)}
-                aria-label="إغلاق المعاينة"
-              >
-                <X />
-              </Button>
-              {stage(true)}
-            </div>,
-            document.body,
-          )
-        : null}
+              <X />
+            </Button>
+            {stage(true)}
+          </DialogPrimitive.Content>
+        </DialogPrimitive.Portal>
+      </DialogPrimitive.Root>
     </>
   );
 }

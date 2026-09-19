@@ -50,6 +50,24 @@ export function Markdown({
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, [rehypeSanitize, schema]]}
         components={{
+          p: ({ children }) => <p dir="auto">{children}</p>,
+          li: ({ children }) => <li dir="auto">{children}</li>,
+          h1: ({ children }) => <h1 dir="auto">{children}</h1>,
+          h2: ({ children }) => <h2 dir="auto">{children}</h2>,
+          h3: ({ children }) => <h3 dir="auto">{children}</h3>,
+          h4: ({ children }) => <h4 dir="auto">{children}</h4>,
+          h5: ({ children }) => <h5 dir="auto">{children}</h5>,
+          h6: ({ children }) => <h6 dir="auto">{children}</h6>,
+          pre: ({ children }) => (
+            <pre dir="ltr" tabIndex={0}>
+              {children}
+            </pre>
+          ),
+          code: ({ children, className: codeClass }) => (
+            <code dir="auto" className={cn("[unicode-bidi:isolate]", codeClass)}>
+              {children}
+            </code>
+          ),
           table: ({ children }) => (
             <div
               className="my-3 w-full min-w-0 overflow-x-auto rounded-lg border border-border focus-visible:outline-2 focus-visible:outline-ring"

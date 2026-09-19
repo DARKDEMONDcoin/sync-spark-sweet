@@ -10,6 +10,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { AppIcon, appLabel } from "@/components/site/AppIcon";
 import { runEmployeeAction } from "@/lib/employee-actions.functions";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 export type PendingAction = {
   id: string;
@@ -52,25 +53,29 @@ export function ActionCard({
     return (
       <div className="mt-3 flex items-center gap-3 rounded-2xl border border-mint/30 bg-mint/10 px-4 py-3 text-sm font-semibold animate-pop-in">
         <AppIcon name={action.provider} className="size-5 shrink-0" />
-        <span>تم تنفيذ «{action.label}» فعلياً على {appLabel(action.provider)}.</span>
+        <span>
+          تم تنفيذ «{action.label}» فعلياً على {appLabel(action.provider)}.
+        </span>
       </div>
     );
   }
 
   return (
     <div className="mt-3 rounded-2xl border border-sky/30 bg-sky/10 px-4 py-3 text-sm animate-pop-in">
-      <div className="flex flex-wrap items-center gap-2 font-semibold">
+      <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-2 font-semibold sm:flex">
         <AppIcon name={action.provider} className="size-5 shrink-0" />
         <span className="min-w-0 flex-1">
           {action.label} — جاهز للتنفيذ على <b>{appLabel(action.provider)}</b>
         </span>
-        <button
+        <Button
+          variant="ghost"
           type="button"
           onClick={() => setEdit((v) => !v)}
-          className="text-xs text-muted-foreground hover:text-foreground"
+          aria-expanded={edit}
+          className="col-span-2 min-h-9 shrink-0 text-xs text-muted-foreground hover:text-foreground"
         >
           {edit ? "إخفاء التفاصيل" : "مراجعة وتعديل"}
-        </button>
+        </Button>
       </div>
 
       <div className={cn("mt-2 space-y-2", edit ? "" : "hidden")}>
@@ -82,10 +87,10 @@ export function ActionCard({
             </span>
             <textarea
               dir="auto"
-              rows={(values[i.name] ?? "").length > 90 ? 4 : 1}
+              rows={3}
               value={values[i.name] ?? ""}
               onChange={(e) => setValues((v) => ({ ...v, [i.name]: e.target.value }))}
-              className="w-full resize-y rounded-xl border border-border bg-background px-3 py-2 text-sm"
+              className="w-full min-w-0 resize-y rounded-xl border border-border bg-background px-3 py-2 text-sm"
             />
           </label>
         ))}
@@ -111,22 +116,23 @@ export function ActionCard({
         </p>
       ) : null}
 
-      <div className="mt-3 flex items-center gap-2">
-        <button
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <Button
           type="button"
           disabled={run.isPending || missing.length > 0}
           onClick={() => run.mutate()}
-          className="rounded-xl bg-foreground px-4 py-2 text-xs font-bold text-background disabled:opacity-50"
+          className="min-h-10 rounded-xl bg-foreground px-4 py-2 text-xs font-bold text-background disabled:opacity-50"
         >
           {run.isPending ? "جارٍ التنفيذ…" : "اعتمد ونفّذ"}
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="ghost"
           type="button"
           onClick={() => onDone?.()}
           className="text-xs text-muted-foreground hover:text-foreground"
         >
           لاحقاً
-        </button>
+        </Button>
       </div>
     </div>
   );

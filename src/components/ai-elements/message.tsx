@@ -21,7 +21,7 @@ export type MessageProps = HTMLAttributes<HTMLDivElement> & {
 export const Message = ({ className, from, ...props }: MessageProps) => (
   <div
     className={cn(
-      "group flex w-full max-w-[95%] flex-col gap-2",
+      "group flex w-full min-w-0 max-w-[95%] flex-col gap-2 [overflow-wrap:anywhere]",
       from === "user" ? "is-user ml-auto justify-end" : "is-assistant",
       className,
     )}
@@ -48,7 +48,7 @@ export const MessageContent = ({ children, className, ...props }: MessageContent
 export type MessageActionsProps = ComponentProps<"div">;
 
 export const MessageActions = ({ className, children, ...props }: MessageActionsProps) => (
-  <div className={cn("flex items-center gap-1", className)} {...props}>
+  <div className={cn("flex min-w-0 flex-wrap items-center gap-1.5", className)} {...props}>
     {children}
   </div>
 );
@@ -289,7 +289,13 @@ MessageResponse.displayName = "MessageResponse";
 export type MessageToolbarProps = ComponentProps<"div">;
 
 export const MessageToolbar = ({ className, children, ...props }: MessageToolbarProps) => (
-  <div className={cn("mt-4 flex w-full items-center justify-between gap-4", className)} {...props}>
+  <div
+    className={cn(
+      "mt-4 flex w-full min-w-0 flex-wrap items-center justify-between gap-4",
+      className,
+    )}
+    {...props}
+  >
     {children}
   </div>
 );
