@@ -96,7 +96,11 @@ export function PostQuality({
         res.variants.map((v) => ({ text: v.text, score: v.score, grade: v.grade, angle: v.angle })),
       );
     } catch (err) {
-      setError(err instanceof Error ? err.message : "تعذّر رفع الجودة الآن — تحقّق من الاتصال وأعد المحاولة.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "تعذّر رفع الجودة الآن — تحقّق من الاتصال وأعد المحاولة.",
+      );
     } finally {
       setBusy(false);
     }
@@ -159,7 +163,10 @@ export function PostQuality({
               </div>
               <ul className="mt-2 space-y-1.5">
                 {weakest.strengths.slice(0, 4).map((item) => (
-                  <li key={item.id} className="flex items-start gap-1.5 text-[11px] leading-relaxed">
+                  <li
+                    key={item.id}
+                    className="flex items-start gap-1.5 text-[11px] leading-relaxed"
+                  >
                     <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-jade-deep" />
                     <span className="text-ink-soft">{item.label}</span>
                   </li>
@@ -173,7 +180,10 @@ export function PostQuality({
               <ul className="mt-2 space-y-1.5">
                 {(weakest.quickFixes.length ? weakest.quickFixes : weakest.checks.slice(0, 3)).map(
                   (item) => (
-                    <li key={item.id} className="flex items-start gap-1.5 text-[11px] leading-relaxed">
+                    <li
+                      key={item.id}
+                      className="flex items-start gap-1.5 text-[11px] leading-relaxed"
+                    >
                       {item.severity === "fail" ? (
                         <XCircle className="mt-0.5 size-3.5 shrink-0 text-coral" />
                       ) : item.severity === "warn" ? (
@@ -285,7 +295,9 @@ export function PostQuality({
                       استخدم هذه
                     </Button>
                   </div>
-                  {v.angle ? <p className="mt-1 text-[10px] text-muted-foreground">{v.angle}</p> : null}
+                  {v.angle ? (
+                    <p className="mt-1 text-[10px] text-muted-foreground">{v.angle}</p>
+                  ) : null}
                   <p
                     className="mt-1.5 max-h-40 overflow-auto whitespace-pre-line text-[11px] leading-relaxed text-ink-soft"
                     dir="auto"

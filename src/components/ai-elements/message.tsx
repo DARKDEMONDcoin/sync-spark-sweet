@@ -289,7 +289,13 @@ MessageResponse.displayName = "MessageResponse";
 export type MessageToolbarProps = ComponentProps<"div">;
 
 export const MessageToolbar = ({ className, children, ...props }: MessageToolbarProps) => (
-  <div className={cn("mt-4 flex w-full min-w-0 flex-wrap items-center justify-between gap-4", className)} {...props}>
+  <div
+    className={cn(
+      "mt-4 flex w-full min-w-0 flex-wrap items-center justify-between gap-4",
+      className,
+    )}
+    {...props}
+  >
     {children}
   </div>
 );

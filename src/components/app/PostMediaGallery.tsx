@@ -152,7 +152,10 @@ export function PostMediaGallery({ media, onRemove, onError }: Props) {
                   variant="ghost"
                   aria-label={item.label || `عرض الوسيطة ${itemIndex + 1}`}
                   aria-pressed={itemIndex === index}
-                  className={cn("post-media-thumb h-auto shrink-0 p-0", itemIndex === index && "is-active")}
+                  className={cn(
+                    "post-media-thumb h-auto shrink-0 p-0",
+                    itemIndex === index && "is-active",
+                  )}
                   onClick={() => setIndex(itemIndex)}
                 >
                   {item.kind === "image" ? (
@@ -180,27 +183,27 @@ export function PostMediaGallery({ media, onRemove, onError }: Props) {
       </div>
       <DialogPrimitive.Root open={viewer} onOpenChange={setViewer}>
         <DialogPrimitive.Portal>
-            <DialogPrimitive.Content
-              className="post-media-lightbox"
-              aria-describedby={undefined}
-              onCloseAutoFocus={(event) => {
-                event.preventDefault();
-                expandRef.current?.focus();
-              }}
+          <DialogPrimitive.Content
+            className="post-media-lightbox"
+            aria-describedby={undefined}
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              expandRef.current?.focus();
+            }}
+          >
+            <DialogPrimitive.Title className="sr-only">معاينة الوسائط كاملة</DialogPrimitive.Title>
+            <Button
+              type="button"
+              variant="secondary"
+              size="icon"
+              className="post-media-close"
+              onClick={() => setViewer(false)}
+              aria-label="إغلاق المعاينة"
             >
-              <DialogPrimitive.Title className="sr-only">معاينة الوسائط كاملة</DialogPrimitive.Title>
-              <Button
-                type="button"
-                variant="secondary"
-                size="icon"
-                className="post-media-close"
-                onClick={() => setViewer(false)}
-                aria-label="إغلاق المعاينة"
-              >
-                <X />
-              </Button>
-              {stage(true)}
-            </DialogPrimitive.Content>
+              <X />
+            </Button>
+            {stage(true)}
+          </DialogPrimitive.Content>
         </DialogPrimitive.Portal>
       </DialogPrimitive.Root>
     </>
