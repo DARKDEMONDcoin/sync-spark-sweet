@@ -641,6 +641,17 @@ export async function runEmployeeTurn(
       }
     }
 
+    // الذاكرة التشغيلية لبقية الفريق (أمَل، سالم، دانة، آدم): أرقام أدائهم الحقيقية وأمثلتهم المعتمدة.
+    let genericMemory = "";
+    if (!["sonny", "nour"].includes(data.employeeId)) {
+      try {
+        const { opsMemory } = await import("./ops-memory.server");
+        genericMemory = await opsMemory(supabase as never, data.workspaceId, data.employeeId);
+      } catch (error) {
+        console.error("[ops-memory] context failed:", error);
+      }
+    }
+
     let learning = { block: "", lessonIds: [] as string[] };
     try {
       const { learningBlock } = await import("./learning.server");
