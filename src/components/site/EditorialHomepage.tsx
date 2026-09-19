@@ -53,6 +53,7 @@ import planFlowWide from "@/assets/product/plan-flow-wide.png";
 import planFlowTall from "@/assets/product/plan-flow-tall.png";
 import adsVisual from "@/assets/product/ads-visual.png";
 import proofVisual from "@/assets/product/proof-visual.png";
+import perfumeOutput from "@/assets/product/perfume-live-output.jpg.asset.json";
 import { VerifiedBadge } from "@/components/site/VerifiedBadge";
 
 type DemoPhase = "idle" | "thinking" | "draft" | "approved";
@@ -206,14 +207,75 @@ const adsProof = [
   { k: "سقف تكلفة الليد", v: "القيمة × الإغلاق", note: "يُحسب من أرقامك أنت" },
 ] as const;
 
-/** عينة مخرج حقيقية بصيغتها كما تُسلَّم داخل المنصة. */
-const sampleOutput = {
-  prompt: "عندي مطعم في الرياض، أبغى أعلن عن عرض نهاية الأسبوع",
-  post: "نهاية الأسبوع لها طعم ثاني 🍽️\n\nعرض الجمعة والسبت: وجبتين + مقبلات + مشروبين بـ ١٤٩ ريال بدل ٢١٠.\nالحجز محدود ٤٠ طاولة فقط — احجز من الرابط في البايو.\n\n📍 الرياض · حي الياسمين\n⏰ من ١ ظهرًا حتى ١٢ منتصف الليل\n\n#الرياض #مطاعم_الرياض #نهاية_الأسبوع",
-  ad: "الجمعة والسبت بس.\nوجبتين + مقبلات + مشروبين = ١٤٩ ريال.\nالطاولات تنحجز بسرعة — احجز مكانك الحين.\n\nزر الإجراء: احجز الآن · الجمهور: الرياض ٢٥-٤٥ كم ١٢",
-  brief:
-    "صورة الطبق من زاوية ٤٥°، إضاءة دافئة، النص على الثلث العلوي، السعر بخط عريض قرميدي، مقاسات ١٠٨٠×١٣٥٠ و١٠٨٠×١٩٢٠.",
-} as const;
+/** مخرجات حقيقية من الحساب التجريبي، مختصرة في العرض دون إعادة صياغة محتواها. */
+const liveOutputs: ReadonlyArray<{
+  id: "sonny" | "eva" | "sam" | "nour" | "dana" | "adam";
+  name: string;
+  role: string;
+  prompt: string;
+  title: string;
+  summary: string;
+  image?: string;
+  featured?: boolean;
+}> = [
+  {
+    id: "dana",
+    name: "دانة",
+    role: "المصممة",
+    prompt:
+      "توليد صورة تصميم: زجاجة عطر عود فاخرة على رخام داكن، بألوان كحلي وذهبي، ستايل مينيمال، مربع 1:1.",
+    title: "تصميم عطر فاخر",
+    summary:
+      "أثرٌ يبقى\nعبير العود بلمسة فاخرة\n\n1080×1080 · هامش آمن 64px\nنص بديل جاهز وإضاءة دافئة وتباين مطابق.",
+    image: perfumeOutput.url,
+    featured: true,
+  },
+  {
+    id: "sonny",
+    name: "سِراج",
+    role: "مسؤول السوشيال",
+    prompt: "اكتب منشور إكس واحد عن عرض هذا الأسبوع.",
+    title: "منشور إكس جاهز",
+    summary:
+      "كم منصة تفتح لإنجاز مهمة واحدة؟\n\nعرض هذا الأسبوع من Megsy AI: ابدأ مجاناً، واستخدم الدردشة وتوليد الصور والفيديو وإنشاء العروض والتطبيقات من مكان واحد.\n\n#الذكاء_الاصطناعي",
+  },
+  {
+    id: "eva",
+    name: "أمَل",
+    role: "المساعدة التنفيذية",
+    prompt: "ابعتلي إيميل متابعة لعميل ما ردش على عرض السعر.",
+    title: "متابعة بلا ضغط",
+    summary:
+      "جهّزت 3 صيغ للمتابعة، والنسخة القصيرة هي الأنسب لطلب رد واضح بلا ضغط.\n\nاليوم: متابعة قصيرة\nبعد 3 أيام: نسخة ودّية\nبعد 7 أيام: إغلاق مهذب",
+  },
+  {
+    id: "sam",
+    name: "سالم",
+    role: "مسؤول المبيعات",
+    prompt: "عميل قالي العرض غالي وبيماطل من أسبوعين، اعملي رد جاهز للإرسال.",
+    title: "رد بيع حاسم",
+    summary:
+      "أستاذ محمود، متفهم إن العرض أعلى من الميزانية المتوقعة. بدل ما نخفض السعر ونضعف النتيجة، نقدر نراجع البنود ونحتفظ بالأولوية فقط ضمن نطاق أصغر. هل الأنسب نراجع النطاق في مكالمة قصيرة، أم نغلق الملف مؤقتًا؟",
+  },
+  {
+    id: "nour",
+    name: "نور",
+    role: "مسؤولة المحتوى والسيو",
+    prompt: "الساعة كام دلوقتي بالظبط؟ وإيه أهم خبر في مصر النهاردة؟ وسعر الدولار كام؟",
+    title: "بحث حي بلا تخمين",
+    summary:
+      "تحققت الآن، لكن النتائج المتاحة لا تحدد خبراً عاماً يمكن وصفه بأنه الأهم في مصر. ولا تتضمن رقماً مؤكداً لسعر الدولار مقابل الجنيه؛ لذلك لن أذكر سعراً غير موثّق.",
+  },
+  {
+    id: "adam",
+    name: "آدم",
+    role: "محلل البيانات",
+    prompt: "حلل أداء حملاتي الشهر ده وقولي أعمل إيه.",
+    title: "قرار مبني على الدليل",
+    summary:
+      "القرار الآن: ثبّت ميزانيات الحملات. لم أجد بيانات إنفاق أو تحويلات تسمح بتحديد حملة رابحة.\n\nلا تحكم بسعر النقرة وحده؛ القرار النهائي يُبنى على CPA وROAS وصافي الإيراد.",
+  },
+] as const;
 
 /** الفرق بين سهل ومحادثة ذكاء اصطناعي عامة. */
 const versus = [
@@ -665,47 +727,49 @@ export function EditorialHomepage() {
                 </h2>
               </div>
               <p>
-                طلب واحد بالعامية، والمخرج جاهز للاعتماد: منشور بلهجة جمهورك، نص إعلان مموّل، وبريف
-                تصميم لدانة — دون تعديل من عندنا.
+                طلبات حقيقية كُتبت للموظفين داخل الحساب التجريبي، وتحت كل طلب المخرج الذي سُلّم
+                فعلًا للمراجعة — بلا نشر خارجي.
               </p>
             </header>
           </Reveal>
-          <Reveal className="sahl-sample-board">
-            <div className="sahl-sample-ask">
-              <small>طلبك</small>
-              <p>{sampleOutput.prompt}</p>
-            </div>
-            <div className="sahl-sample-grid">
-              <article className="is-post">
-                <header>
-                  <Instagram aria-hidden="true" />
-                  <b>منشور إنستجرام</b>
-                  <span>لهجة خليجية</span>
-                </header>
-                <pre>{sampleOutput.post}</pre>
-              </article>
-              <article className="is-ad">
-                <header>
-                  <Megaphone aria-hidden="true" />
-                  <b>نص إعلان مموّل</b>
-                  <span>سِراج</span>
-                </header>
-                <pre>{sampleOutput.ad}</pre>
-              </article>
-              <article className="is-brief">
-                <header>
-                  <Sparkles aria-hidden="true" />
-                  <b>بريف التصميم</b>
-                  <span>لدانة</span>
-                </header>
-                <pre>{sampleOutput.brief}</pre>
-              </article>
-            </div>
-            <p className="sahl-sample-note">
-              <CheckCircle2 aria-hidden="true" /> الأرقام والعروض في المثال من طلب المستخدم نفسه —
-              الفريق لا يخترع سعرًا ولا وعدًا من عنده.
-            </p>
-          </Reveal>
+          <div className="sahl-live-output-list">
+            {liveOutputs.map((output, index) => (
+              <Reveal
+                key={output.id}
+                className={output.featured ? "sahl-live-output is-featured" : "sahl-live-output"}
+              >
+                <div className="sahl-live-request">
+                  <span>أنت</span>
+                  <p>{output.prompt}</p>
+                </div>
+                <article className="sahl-live-response">
+                  <header>
+                    <Portrait memberId={output.id} name={output.name} />
+                    <div>
+                      <b>{output.name}</b>
+                      <small>{output.role}</small>
+                    </div>
+                    <span>مخرج حقيقي · {String(index + 1).padStart(2, "0")}</span>
+                  </header>
+                  {output.image ? (
+                    <img
+                      src={output.image}
+                      alt="زجاجة عطر عود فاخرة على رخام داكن"
+                      loading="lazy"
+                    />
+                  ) : null}
+                  <div className="sahl-live-copy">
+                    <h3>{output.title}</h3>
+                    <p>{output.summary}</p>
+                  </div>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+          <p className="sahl-sample-note">
+            <CheckCircle2 aria-hidden="true" /> هذه أمثلة موثقة من سجل الحساب التجريبي؛ اختُصرت
+            للعرض فقط، ولم تُختلق لها أرقام أو نتائج.
+          </p>
         </div>
       </section>
 
