@@ -81,7 +81,11 @@ export function mimeBase64(value: string): string {
 }
 
 export function mimeBody(value: string): string {
-  return mimeBase64(value).match(/.{1,76}/g)?.join("\r\n") ?? "";
+  return (
+    mimeBase64(value)
+      .match(/.{1,76}/g)
+      ?.join("\r\n") ?? ""
+  );
 }
 
 export function mimeHeader(value: string): string {

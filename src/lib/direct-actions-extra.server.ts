@@ -92,7 +92,10 @@ function replyRaw(params: {
     `To: ${mailHeader(params.to)}`,
     `Subject: ${mimeHeader(params.subject)}`,
     ...(params.messageId
-      ? [`In-Reply-To: ${mailHeader(params.messageId)}`, `References: ${mailHeader(params.messageId)}`]
+      ? [
+          `In-Reply-To: ${mailHeader(params.messageId)}`,
+          `References: ${mailHeader(params.messageId)}`,
+        ]
       : []),
     "MIME-Version: 1.0",
     'Content-Type: text/plain; charset="UTF-8"',
