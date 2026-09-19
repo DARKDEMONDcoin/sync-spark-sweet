@@ -948,7 +948,7 @@ export async function executeSkill(
 
   // إزالة المجاملات الافتتاحية («أهلاً بك… بصفتي…») حتى يبدأ المخرج بالمحتوى مباشرة.
   // لو كان المخرج كله مجاملة فلا نُفرغه — نُعيد الأصل بدل تسليم صفحة فارغة.
-  output = sanitizeActionClaims(sanitizeOutput(stripPreamble(output) || output));
+  output = sanitizeActionClaims(sanitizeOutput(stripPreamble(output) || output), connected);
 
   // حَكَم الجودة: لا يخرج أي مخرج للمالك قبل أن يُقاس على معايير قبول القدرة،
   // ويُعاد كتابته مرة واحدة عند رسوبه.
@@ -977,7 +977,9 @@ export async function executeSkill(
   // نستخدم مزوّداً بلا مفتاح وبلا حد يومي، والرابط دائم صالح للنشر مباشرة.
   if (ARTICLE_SKILLS.has(skill.id)) {
     try {
-      const { ownedHeroImage, heroPrompt, extractImagePrompt } = await import("./image-gen.server");
+      const { ownedHeroImage, heroPrompt, extractImagePrompt, stripImagePrompt } = await import(
+        "./image-gen.server"
+      );
       const subjectForImage =
         values["topic"] ||
         values["keyword"] ||
@@ -992,6 +994,8 @@ export async function executeSkill(
       // إن كتب الموظف وصفاً بصرياً دقيقاً داخل المخرج (دانة/سِراج) نولّد الصورة منه
       // حرفياً بدل وصف عام — فتطابق الصورة ما وعد به النص.
       const authored = extractImagePrompt(output);
+      // البرومبت أداة داخلية للتوليد — لا يُعرض للمالك داخل المخرج.
+      if (authored) output = stripImagePrompt(output);
       const hero = await ownedHeroImage(
         client as unknown as Parameters<typeof ownedHeroImage>[0],
         params.workspaceId,

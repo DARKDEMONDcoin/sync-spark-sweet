@@ -12,6 +12,8 @@ import {
   list,
   base64Url,
   mimeHeader,
+  mailHeader,
+  mimeBody,
   salesforceInstance,
   mailchimpBase,
   pipedriveBase,
@@ -87,16 +89,19 @@ function replyRaw(params: {
   messageId?: string;
 }): string {
   const lines = [
-    `To: ${params.to}`,
+    `To: ${mailHeader(params.to)}`,
     `Subject: ${mimeHeader(params.subject)}`,
     ...(params.messageId
-      ? [`In-Reply-To: ${params.messageId}`, `References: ${params.messageId}`]
+      ? [
+          `In-Reply-To: ${mailHeader(params.messageId)}`,
+          `References: ${mailHeader(params.messageId)}`,
+        ]
       : []),
     "MIME-Version: 1.0",
     'Content-Type: text/plain; charset="UTF-8"',
     "Content-Transfer-Encoding: base64",
     "",
-    base64Url(params.body).replace(/-/g, "+").replace(/_/g, "/"),
+    mimeBody(params.body),
   ];
   return base64Url(lines.join("\r\n"));
 }

@@ -305,6 +305,21 @@ export function extractImagePrompt(markdown: string): string | null {
 }
 
 /**
+ * يحذف كتلة الوصف البصري من المخرج بعد استخدامها في توليد الصورة،
+ * فلا يرى المالك برومبتاً إنجليزياً داخل نص عربي.
+ */
+export function stripImagePrompt(markdown: string): string {
+  return markdown
+    .replace(
+      /^[ \t]*[*_#> \t]*(?:image[ \t]*prompt|prompt|وصف الصورة|برومبت الصورة|برومبت|الوصف البصري)[ \t]*[:：\-–]?[ \t*]*([^\n]*)(?:\n[ \t]*```[^\n]*\n([\s\S]*?)```|\n([A-Za-z][^\n]{40,900}))?/gim,
+      (match, inline: string, block: string | undefined, next: string | undefined) =>
+        /[a-z]{4,}/i.test([inline, block, next].filter(Boolean).join(" ")) ? "" : match,
+    )
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+/**
  * صورة رئيسية «مملوكة»: نولّدها ثم نرفعها إلى مخزن Supabase (nour-media) باسم مساحة العمل،
  * فتصبح أصلاً دائماً يخصّ العميل لا رابطاً خارجياً. عند أي فشل نرجع لرابط المزوّد المجاني.
  */

@@ -70,21 +70,50 @@ export function base64Url(value: string): string {
 }
 
 /** ترميز عنوان/موضوع عربي في ترويسة البريد. */
+export function mailHeader(value: string): string {
+  if (/[\r\n\0]/.test(value)) throw new Error("ترويسة البريد تحتوي على محارف غير مسموحة.");
+  return value;
+}
+
+export function mimeBase64(value: string): string {
+  const encoded = base64Url(value).replace(/-/g, "+").replace(/_/g, "/");
+  return encoded.padEnd(Math.ceil(encoded.length / 4) * 4, "=");
+}
+
+export function mimeBody(value: string): string {
+  return (
+    mimeBase64(value)
+      .match(/.{1,76}/g)
+      ?.join("\r\n") ?? ""
+  );
+}
+
 export function mimeHeader(value: string): string {
+  mailHeader(value);
   // eslint-disable-next-line no-control-regex
   if (/^[\x00-\x7F]*$/.test(value)) return value;
-  return `=?UTF-8?B?${base64Url(value).replace(/-/g, "+").replace(/_/g, "/")}?=`;
+  const chunks: string[] = [];
+  let chunk = "";
+  for (const char of value) {
+    if (new TextEncoder().encode(chunk + char).length > 42) {
+      chunks.push(`=?UTF-8?B?${mimeBase64(chunk)}?=`);
+      chunk = "";
+    }
+    chunk += char;
+  }
+  if (chunk) chunks.push(`=?UTF-8?B?${mimeBase64(chunk)}?=`);
+  return chunks.join("\r\n ");
 }
 
 export function rfc822(to: string, subject: string, body: string): string {
   return [
-    `To: ${to}`,
+    `To: ${mailHeader(to)}`,
     `Subject: ${mimeHeader(subject)}`,
     "MIME-Version: 1.0",
     'Content-Type: text/plain; charset="UTF-8"',
     "Content-Transfer-Encoding: base64",
     "",
-    base64Url(body).replace(/-/g, "+").replace(/_/g, "/"),
+    mimeBody(body),
   ].join("\r\n");
 }
 

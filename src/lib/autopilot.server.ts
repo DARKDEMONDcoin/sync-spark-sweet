@@ -8,6 +8,7 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 import type { Database } from "@/integrations/supabase/types";
+import { scorePost } from "./post-quality";
 
 type Admin = SupabaseClient<Database>;
 export type AutopilotRow = Database["public"]["Tables"]["social_autopilot"]["Row"];
@@ -273,7 +274,7 @@ export async function runAutopilotRow(
   try {
     const { data: workspace } = await admin
       .from("workspaces")
-      .select("name, industry")
+      .select("name, industry, banned_words")
       .eq("id", row.workspace_id)
       .maybeSingle();
 
@@ -344,6 +345,20 @@ export async function runAutopilotRow(
       return { workspaceId: row.workspace_id, status: "skipped", created: 0, note: "لا صورة" };
     }
 
+    // Fail closed before scheduling any platform if a hard quality rule fails.
+    for (const post of rows) {
+      const report = scorePost({
+        text: post.body,
+        provider: post.provider,
+        hasMedia: Boolean(post.image_url),
+        bannedWords: workspace?.banned_words ?? [],
+      });
+      if (report.blockers.length) {
+        throw new Error(
+          `لم تتم الجدولة: ${report.blockers.map((check) => check.label).join("، ")}`,
+        );
+      }
+    }
     const { error } = await admin.from("social_posts").insert(rows);
     if (error) throw new Error(error.message);
 
