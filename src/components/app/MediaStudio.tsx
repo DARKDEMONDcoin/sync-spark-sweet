@@ -464,8 +464,10 @@ export function MediaStudio({
                   key={n}
                   type="button"
                   onClick={() => setCount(n)}
+                  aria-pressed={count === n}
+                  aria-label={`عدد الصور ${n}`}
                   className={cn(
-                    "size-7 rounded-lg text-[0.68rem] font-bold transition-colors",
+                    "size-9 rounded-lg text-[0.68rem] font-bold transition-colors",
                     count === n
                       ? "bg-foreground text-background"
                       : "text-muted-foreground hover:bg-secondary",
