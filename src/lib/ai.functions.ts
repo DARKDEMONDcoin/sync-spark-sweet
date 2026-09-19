@@ -584,9 +584,17 @@ export async function runEmployeeTurn(
     // صاحب العمل: اسمه الأول ومسمّاه — حتى يخاطبه الموظف كزميل يعرفه لا كمستخدم مجهول.
     const { data: ownerProfile } = await supabase
       .from("profiles")
-      .select("full_name, job_title")
+      .select("full_name, job_title, dialect")
       .eq("id", workspace.owner_id)
       .maybeSingle();
+    // اللهجة التي اختارها المالك في إعدادات حسابه تتقدّم على اللهجة المستنتجة من الدولة.
+    const wsProfileDialect =
+      ws.profile &&
+      typeof ws.profile === "object" &&
+      typeof (ws.profile as { dialect?: unknown }).dialect === "string"
+        ? ((ws.profile as { dialect?: string }).dialect ?? "").trim()
+        : "";
+    const ownerDialect = (ownerProfile?.dialect ?? "").trim() || wsProfileDialect || null;
     const ownerFirstName =
       (ownerProfile?.full_name ?? "").trim().split(/\s+/).filter(Boolean)[0] ?? null;
 
@@ -633,6 +641,17 @@ export async function runEmployeeTurn(
       }
     }
 
+    // الذاكرة التشغيلية لبقية الفريق (أمَل، سالم، دانة، آدم): أرقام أدائهم الحقيقية وأمثلتهم المعتمدة.
+    let genericMemory = "";
+    if (!["sonny", "nour"].includes(data.employeeId)) {
+      try {
+        const { opsMemory } = await import("./ops-memory.server");
+        genericMemory = await opsMemory(supabase as never, data.workspaceId, data.employeeId);
+      } catch (error) {
+        console.error("[ops-memory] context failed:", error);
+      }
+    }
+
     let learning = { block: "", lessonIds: [] as string[] };
     try {
       const { learningBlock } = await import("./learning.server");
@@ -671,6 +690,7 @@ export async function runEmployeeTurn(
       scopeBoundaryBlock(data.employeeId, data.message),
       sirajMemory,
       nourMemory,
+      genericMemory,
       decisionsMemory,
       learning.block,
       qualityCriteria[data.employeeId]?.length
@@ -682,6 +702,7 @@ export async function runEmployeeTurn(
         profile: ws.profile,
         website: ws.website,
         country: ws.country,
+        dialect: ownerDialect,
       }),
       brainText ? `## عقل العلامة (ذاكرة مشتركة بين الفريق)\n${brainText}` : "",
       teamActivity ? `## آخر ما أنجزه الفريق\n${teamActivity}` : "",

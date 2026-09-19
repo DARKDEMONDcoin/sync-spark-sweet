@@ -155,6 +155,7 @@ function systemFor(
       profile: ctx.ws.profile,
       website: ctx.ws.website,
       country: ctx.ws.country,
+      dialect,
     }),
     `## العلامة\nالاسم: ${ctx.ws.name} · المجال: ${ctx.ws.industry} · النبرة: ${ctx.ws.tone} · اللهجة المطلوبة: ${dialect}` +
       (ctx.ws.banned_words?.length ? `\nكلمات ممنوعة: ${ctx.ws.banned_words.join("، ")}` : ""),
@@ -458,7 +459,14 @@ export async function generateCalendarPost(
     const { autofixPosts } = await import("./post-autofix.server");
     const [fixed] = await autofixPosts(
       "",
-      [{ title: meta.title ?? "منشور", channel: post.provider, body, image_prompt: out?.image_prompt ?? "" }],
+      [
+        {
+          title: meta.title ?? "منشور",
+          channel: post.provider,
+          body,
+          image_prompt: out?.image_prompt ?? "",
+        },
+      ],
       {
         bannedWords: (ctx.ws as { banned_words?: string[] | null }).banned_words ?? [],
         dialect,
@@ -470,7 +478,6 @@ export async function generateCalendarPost(
   } catch (e) {
     console.warn("[calendar] autofix skipped:", e instanceof Error ? e.message : e);
   }
-
 
   let imageUrl: string | null = post.image_url;
   if (opts.withImage && !imageUrl) {
