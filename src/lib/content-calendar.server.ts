@@ -459,7 +459,14 @@ export async function generateCalendarPost(
     const { autofixPosts } = await import("./post-autofix.server");
     const [fixed] = await autofixPosts(
       "",
-      [{ title: meta.title ?? "منشور", channel: post.provider, body, image_prompt: out?.image_prompt ?? "" }],
+      [
+        {
+          title: meta.title ?? "منشور",
+          channel: post.provider,
+          body,
+          image_prompt: out?.image_prompt ?? "",
+        },
+      ],
       {
         bannedWords: (ctx.ws as { banned_words?: string[] | null }).banned_words ?? [],
         dialect,
@@ -471,7 +478,6 @@ export async function generateCalendarPost(
   } catch (e) {
     console.warn("[calendar] autofix skipped:", e instanceof Error ? e.message : e);
   }
-
 
   let imageUrl: string | null = post.image_url;
   if (opts.withImage && !imageUrl) {
