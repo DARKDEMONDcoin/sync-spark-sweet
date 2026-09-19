@@ -413,9 +413,9 @@ function CalendarPage() {
                 ))}
               </div>
               {isLoading ? (
-                <p className="flex items-center gap-2 p-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 p-6 text-sm text-muted-foreground">
                   <BrandLoader size="sm" />
-                </p>
+                </div>
               ) : (
                 <div className="grid grid-cols-7">
                   {grid.map((d, i) => {

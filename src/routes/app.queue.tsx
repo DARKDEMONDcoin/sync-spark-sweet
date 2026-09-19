@@ -96,9 +96,9 @@ function QueuePage() {
       ) : null}
 
       {isLoading ? (
-        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <BrandLoader size="sm" />
-        </p>
+        </div>
       ) : rows.length === 0 ? (
         <div className="rounded-3xl border border-border bg-card p-14 text-center">
           <span className="mx-auto grid size-14 place-items-center rounded-2xl bg-secondary text-ink-soft">

@@ -1074,7 +1074,13 @@ export async function runEmployeeTurn(
               Boolean(draft) ||
               deliverables.some((d) => d.body && d.body.length > 80);
             if (wantsVisual) {
-              emit({ type: "step", label: "أولّد الصورة المطلوبة الآن" });
+              emit({
+                type: "step",
+                label:
+                  imageMode === "manual" || explicitImage
+                    ? "أولّد الصورة المطلوبة الآن"
+                    : "أجهّز صورة مرافقة للمخرج",
+              });
               // وصف المستخدم يُحترم حرفياً؛ وإلا يُشتق الوصف من طلبه ومن المخرج نفسه.
               const prompt =
                 imageMode === "manual"
