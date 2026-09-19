@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
@@ -80,7 +81,7 @@ export function InlineApproval({
       <div className="flex items-center gap-2 rounded-2xl border border-border bg-secondary/40 px-4 py-3 text-sm font-semibold animate-pop-in">
         {state === "done" ? (
           <>
-            <span className="grid size-6 place-items-center rounded-full bg-jade text-background">
+            <span className="grid size-6 shrink-0 place-items-center rounded-full bg-jade text-background">
               <Check className="size-3.5" strokeWidth={3} />
             </span>
             تم الاعتماد داخل المحادثة.
@@ -95,9 +96,9 @@ export function InlineApproval({
   }
 
   return (
-    <div className="rounded-2xl border border-jade/25 bg-jade/8 p-4 animate-pop-in">
+    <div className="min-w-0 [overflow-wrap:anywhere] rounded-2xl border border-jade/25 bg-jade/8 p-4 animate-pop-in">
       <p className="flex items-center gap-2 text-sm font-bold text-jade-deep">
-        <span className="grid size-6 place-items-center rounded-full bg-jade text-background">
+        <span className="grid size-6 shrink-0 place-items-center rounded-full bg-jade text-background">
           <Check className="size-3.5" strokeWidth={3} />
         </span>
         {task?.title ? task.title : "المخرج جاهز"} — بانتظار اعتمادك
@@ -114,7 +115,8 @@ export function InlineApproval({
             className="w-full rounded-xl border border-border bg-background p-3 text-sm"
           />
           <div className="flex flex-wrap gap-2">
-            <button
+            <Button
+              variant="ghost"
               type="button"
               onClick={() => void act("rejected")}
               disabled={busy !== null}
@@ -126,19 +128,21 @@ export function InlineApproval({
                 <X className="size-3.5" />
               )}
               تأكيد الرفض
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="ghost"
               type="button"
               onClick={() => setRejecting(false)}
-              className="text-xs font-bold text-muted-foreground hover:text-foreground"
+              className="min-h-10 px-3 text-xs font-bold text-muted-foreground hover:text-foreground"
             >
               تراجع
-            </button>
+            </Button>
           </div>
         </div>
       ) : (
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <button
+          <Button
+            variant="ghost"
             type="button"
             onClick={() => void act("done")}
             disabled={busy !== null}
@@ -150,26 +154,28 @@ export function InlineApproval({
               <Check className="size-3.5" />
             )}
             اعتمد الآن
-          </button>
+          </Button>
           {onEdit && output ? (
-            <button
+            <Button
+              variant="ghost"
               type="button"
               onClick={() => onEdit(output)}
               className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-background px-4 text-xs font-bold"
             >
               <Pencil className="size-3.5" /> عدّل النص هنا
-            </button>
+            </Button>
           ) : null}
-          <button
+          <Button
+            variant="ghost"
             type="button"
             onClick={() => setRejecting(true)}
             className="inline-flex min-h-10 items-center gap-2 rounded-full border border-border bg-background px-4 text-xs font-bold text-coral"
           >
             <X className="size-3.5" /> ارفض
-          </button>
+          </Button>
           <Link
             to="/app/approvals"
-            className="ms-auto text-[0.7rem] font-semibold text-muted-foreground underline underline-offset-4 hover:text-foreground"
+            className="ms-auto inline-flex min-h-10 items-center text-xs font-semibold text-muted-foreground underline underline-offset-4 hover:text-foreground"
           >
             أو راجعه لاحقاً في صفحة الموافقات
           </Link>
