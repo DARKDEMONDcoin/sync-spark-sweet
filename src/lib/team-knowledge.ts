@@ -270,9 +270,11 @@ export function businessProfileBlock(
  * منهج تفكير، عمق مهني، صدق، وتنفيذ لا يتوقف عند الكلام.
  */
 /** قاعدة اللغة واللهجة — مصدر واحد، تتبع دولة العلامة. */
-export function languageBlock(country?: string | null): string {
+export function languageBlock(country?: string | null, chosenDialect?: string | null): string {
   const c = (country ?? "").toLowerCase();
+  const picked = (chosenDialect ?? "").trim();
   const dialect =
+    picked ||
     /egypt|مصر|eg\b/.test(c)
       ? "المصرية الخفيفة المفهومة"
       : /saudi|السعود|ksa|sa\b/.test(c)
