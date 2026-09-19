@@ -66,7 +66,9 @@ export async function opsMemory(
     sections.push(
       [
         "### مخرجات لك اعتمدها المالك فعلاً (احتذِ ببنيتها ونبرتها)",
-        ...approved.map((t) => `- ${t.title} (${t.channel || t.kind}): ${clip(t.output ?? "", 420)}`),
+        ...approved.map(
+          (t) => `- ${t.title} (${t.channel || t.kind}): ${clip(t.output ?? "", 420)}`,
+        ),
       ].join("\n"),
     );
   }
@@ -75,9 +77,7 @@ export async function opsMemory(
   if (runs.length) {
     const scored = runs.filter((r) => typeof r.quality_score === "number");
     const avg = scored.length
-      ? Math.round(
-          scored.reduce((sum, r) => sum + (r.quality_score ?? 0), 0) / scored.length,
-        )
+      ? Math.round(scored.reduce((sum, r) => sum + (r.quality_score ?? 0), 0) / scored.length)
       : null;
     const issues = new Map<string, number>();
     for (const run of runs) {

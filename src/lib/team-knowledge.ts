@@ -70,7 +70,6 @@ export const employeeDirectory: Record<
       { provider: "slack", label: "Slack", why: "ملخصات الفريق" },
       { provider: "notion", label: "Notion", why: "توثيق المحاضر والمهام" },
       { provider: "zoom", label: "Zoom", why: "إنشاء روابط الاجتماعات وجدولتها" },
-
     ],
     handsOffTo: "رسائل المبيعات والعروض → سالم. أي محتوى تسويقي → سِراج أو نور.",
   },
@@ -95,7 +94,6 @@ export const employeeDirectory: Record<
       { provider: "intercom", label: "Intercom", why: "محادثات العملاء والمتابعة" },
       { provider: "twilio", label: "Twilio", why: "رسائل SMS للمتابعة" },
       { provider: "airtable", label: "Airtable", why: "قواعد بيانات العملاء والصفقات" },
-
     ],
     handsOffTo:
       "صفحات الهبوط ومحتوى الموقع → نور. تصميم العرض التقديمي → دانة. تحليل القمع بالأرقام → آدم.",
@@ -146,7 +144,6 @@ export const employeeDirectory: Record<
       { provider: "google-ads", label: "إعلانات Google", why: "أداء حملات البحث" },
       { provider: "search-console", label: "Google Search Console", why: "بيانات البحث العضوي" },
       { provider: "sheets", label: "Google Sheets", why: "تسجيل المؤشرات وقراءة جداول الأرقام" },
-
     ],
     handsOffTo: "تنفيذ التوصيات على المحتوى → نور أو سِراج. تصميم الإعلان → دانة.",
   },
@@ -276,18 +273,18 @@ export function languageBlock(country?: string | null, chosenDialect?: string | 
   const c = (country ?? "").toLowerCase();
   const picked = (chosenDialect ?? "").trim();
   const detected = /egypt|مصر|eg\b/.test(c)
-      ? "المصرية الخفيفة المفهومة"
-      : /saudi|السعود|ksa|sa\b/.test(c)
-        ? "السعودية البيضاء (نجدية معتدلة بلا مبالغة)"
-        : /emirat|امارات|الإمارات|uae|ae\b/.test(c)
-          ? "الخليجية الإماراتية المعتدلة"
-          : /kuwait|الكويت|qatar|قطر|bahrain|البحرين|oman|عمان/.test(c)
-            ? "الخليجية المعتدلة"
-            : /jordan|الأردن|lebanon|لبنان|syria|سوريا|palest|فلسطين/.test(c)
-              ? "الشامية المفهومة"
-              : /morocc|المغرب|algeri|الجزائر|tunis|تونس/.test(c)
-                ? "الدارجة المغاربية المخففة مع فصحى مبسّطة"
-                : "فصحى معاصرة مبسّطة قريبة من الكلام اليومي";
+    ? "المصرية الخفيفة المفهومة"
+    : /saudi|السعود|ksa|sa\b/.test(c)
+      ? "السعودية البيضاء (نجدية معتدلة بلا مبالغة)"
+      : /emirat|امارات|الإمارات|uae|ae\b/.test(c)
+        ? "الخليجية الإماراتية المعتدلة"
+        : /kuwait|الكويت|qatar|قطر|bahrain|البحرين|oman|عمان/.test(c)
+          ? "الخليجية المعتدلة"
+          : /jordan|الأردن|lebanon|لبنان|syria|سوريا|palest|فلسطين/.test(c)
+            ? "الشامية المفهومة"
+            : /morocc|المغرب|algeri|الجزائر|tunis|تونس/.test(c)
+              ? "الدارجة المغاربية المخففة مع فصحى مبسّطة"
+              : "فصحى معاصرة مبسّطة قريبة من الكلام اليومي";
   const dialect = picked || detected;
   return [
     "## اللغة واللهجة",
