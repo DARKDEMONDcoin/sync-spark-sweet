@@ -349,7 +349,7 @@ export function sharedSystemBlocks(params: {
 }): string[] {
   return [
     masteryStandard,
-    operatingPrinciples,
+    operatingPrinciples(params.employeeId),
     languageBlock(params.country, params.dialect),
     businessProfileBlock(params.profile, params.website, params.country),
     teamDirectoryBlock(params.employeeId),
@@ -357,6 +357,6 @@ export function sharedSystemBlocks(params: {
     platformLimitsBlock(params.employeeId),
     complianceBlock(params.employeeId),
     integrationPolicyBlock(params.employeeId, params.connected),
-    `## المنصة\n${platformMap}`,
+    `## المنصة\n${platformMapFor(params.employeeId)}`,
   ].filter(Boolean);
 }
