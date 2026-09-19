@@ -208,7 +208,16 @@ const adsProof = [
 ] as const;
 
 /** مخرجات حقيقية من الحساب التجريبي، مختصرة في العرض دون إعادة صياغة محتواها. */
-const liveOutputs = [
+const liveOutputs: ReadonlyArray<{
+  id: "sonny" | "eva" | "sam" | "nour" | "dana" | "adam";
+  name: string;
+  role: string;
+  prompt: string;
+  title: string;
+  summary: string;
+  image?: string;
+  featured?: boolean;
+}> = [
   {
     id: "dana",
     name: "دانة",
