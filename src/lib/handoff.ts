@@ -215,9 +215,12 @@ export function detectHandoff(request: string, currentId: string): Handoff | nul
   const mine = scores.find((x) => x.rule.id === currentId);
   if (mine && mine.s >= top.s) return null;
 
-  // ملكية صريحة تتقدّم على تطابق كلمة واحدة عند الزميل.
+  // ملكية صريحة تتقدّم على تطابق كلمة واحدة عند الزميل — لكنها مرجّح لا نقض مطلق:
+  // إن كان الزميل متفوّقاً بفارق واضح (٣ نقاط فأكثر) فالطلب يخصّه فعلاً.
   const owns = OWNS[currentId];
-  if (owns && owns.test(text)) return null;
+  const gap = top.s - (mine?.s ?? 0);
+  if (owns && owns.test(text) && gap < 3) return null;
+
 
 
   const e = employeeDirectory[top.rule.id];
