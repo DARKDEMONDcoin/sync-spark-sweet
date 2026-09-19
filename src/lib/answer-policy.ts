@@ -96,7 +96,7 @@ function valueGate(employeeId: string): string {
 
 export function answerPolicyBlock(employeeId: string, intent: ChatIntent): string {
   const head = [
-    "## منطق الرد (أعلى سلطة على شكل ردك وطوله وأسئلتك)",
+    "## منطق الرد (المرتبة ٤ في سلّم السلطة — المرجع الحاسم لشكل ردك وطوله وأسئلتك)",
     "معيارك: رد يبدو صادراً عن خبير بشري يحترم وقت صاحب العمل — نتيجة أولاً، لا شرح للعملية، ولا سؤال إلا عند الضرورة القصوى.",
   ];
 
