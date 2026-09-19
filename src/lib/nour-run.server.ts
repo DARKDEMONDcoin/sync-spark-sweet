@@ -948,7 +948,7 @@ export async function executeSkill(
 
   // إزالة المجاملات الافتتاحية («أهلاً بك… بصفتي…») حتى يبدأ المخرج بالمحتوى مباشرة.
   // لو كان المخرج كله مجاملة فلا نُفرغه — نُعيد الأصل بدل تسليم صفحة فارغة.
-  output = sanitizeActionClaims(sanitizeOutput(stripPreamble(output) || output));
+  output = sanitizeActionClaims(sanitizeOutput(stripPreamble(output) || output), connected);
 
   // حَكَم الجودة: لا يخرج أي مخرج للمالك قبل أن يُقاس على معايير قبول القدرة،
   // ويُعاد كتابته مرة واحدة عند رسوبه.
