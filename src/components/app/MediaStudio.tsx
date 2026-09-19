@@ -547,7 +547,8 @@ export function MediaStudio({
                   setError(null);
                   sync.mutate();
                 }}
-                className="ms-auto inline-flex items-center gap-1 rounded-lg border border-border px-2.5 py-1 text-[0.68rem] font-bold transition-colors hover:bg-secondary disabled:opacity-40"
+                aria-disabled={!workspaceId || sync.isPending}
+                className="ms-auto inline-flex min-h-9 items-center gap-1 rounded-lg border border-border px-2.5 py-1 text-[0.68rem] font-bold transition-colors hover:bg-secondary disabled:opacity-40"
               >
                 {sync.isPending ? (
                   <Loader2 className="size-3 animate-spin" />
