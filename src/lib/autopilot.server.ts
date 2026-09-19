@@ -354,7 +354,9 @@ export async function runAutopilotRow(
         bannedWords: workspace?.banned_words ?? [],
       });
       if (report.blockers.length) {
-        throw new Error(`لم تتم الجدولة: ${report.blockers.map((check) => check.label).join("، ")}`);
+        throw new Error(
+          `لم تتم الجدولة: ${report.blockers.map((check) => check.label).join("، ")}`,
+        );
       }
     }
     const { error } = await admin.from("social_posts").insert(rows);
