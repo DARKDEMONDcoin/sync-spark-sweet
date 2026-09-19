@@ -284,9 +284,9 @@ function AutomationsPage() {
       ) : null}
 
       {isLoading ? (
-        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <BrandLoader size="sm" />
-        </p>
+        </div>
       ) : rows.length === 0 ? (
         <div className="rounded-3xl border border-dashed border-border p-10 text-center">
           <CalendarClock className="mx-auto size-8 text-muted-foreground" />

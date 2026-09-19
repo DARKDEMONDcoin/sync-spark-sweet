@@ -390,7 +390,7 @@ function CalendarPage() {
                   const d = new Date();
                   setCursor(new Date(d.getFullYear(), d.getMonth(), 1));
                 }}
-                className="mt-1 text-xs font-bold text-primary hover:underline"
+                className="mt-1 inline-flex min-h-9 items-center justify-center px-2 text-xs font-bold text-primary hover:underline"
               >
                 العودة إلى اليوم
               </button>
@@ -413,9 +413,9 @@ function CalendarPage() {
                 ))}
               </div>
               {isLoading ? (
-                <p className="flex items-center gap-2 p-6 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2 p-6 text-sm text-muted-foreground">
                   <BrandLoader size="sm" />
-                </p>
+                </div>
               ) : (
                 <div className="grid grid-cols-7">
                   {grid.map((d, i) => {
@@ -627,7 +627,7 @@ function CalendarPage() {
               <Link
                 to="/app/chat/$id"
                 params={{ id: "sonny" }}
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary"
+                className="mt-4 inline-flex min-h-10 items-center gap-1.5 px-1 text-sm font-bold text-primary"
               >
                 تحدّث مع سِراج
               </Link>

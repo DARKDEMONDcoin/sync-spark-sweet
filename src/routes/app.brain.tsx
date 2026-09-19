@@ -79,7 +79,8 @@ function BrainPage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="ابحث في معرفة علامتك…"
-                className="min-w-0 flex-1 bg-transparent text-sm outline-none sm:text-base"
+                aria-label="ابحث في معرفة علامتك"
+                className="min-h-6 min-w-0 flex-1 bg-transparent py-1 text-sm outline-none sm:text-base"
               />
             </div>
             <div className="-mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1 [scrollbar-width:none] sm:flex-wrap sm:overflow-visible">

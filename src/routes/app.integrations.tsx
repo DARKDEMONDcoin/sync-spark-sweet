@@ -368,9 +368,9 @@ function IntegrationsPage() {
       ) : null}
 
       {isLoading ? (
-        <p className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <BrandLoader size="sm" />
-        </p>
+        </div>
       ) : (
         <div className="space-y-6">
           {team.map((m) => {
