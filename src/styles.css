@@ -20170,6 +20170,30 @@ section:has(> .integration-grid-wave) {
   --home-line: oklch(0.905 0.008 66);
   --home-terracotta: oklch(0.523 0.134 34.5);
 }
+
+/* شريط الصفحة الرئيسية: يفسح المجال للمحتوى عند النزول ويعود عند الصعود. */
+.sahl-white-nav {
+  transform: translateY(0);
+  opacity: 1;
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.sahl-white-nav.is-hidden {
+  transform: translateY(calc(-100% - env(safe-area-inset-top)));
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sahl-white-nav {
+    transition-duration: 0.01ms;
+  }
+}
 @media (max-width: 1024px) {
   .sahl-white-mobile {
     z-index: 60;
