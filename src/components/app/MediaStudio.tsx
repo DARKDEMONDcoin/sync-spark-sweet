@@ -497,7 +497,8 @@ export function MediaStudio({
                 setError(null);
                 run.mutate();
               }}
-              className="ms-auto inline-flex items-center gap-1.5 rounded-xl bg-foreground px-3.5 py-2 text-xs font-bold text-background disabled:opacity-40"
+              aria-disabled={!workspaceId || prompt.trim().length < 3 || run.isPending}
+              className="ms-auto inline-flex min-h-10 items-center gap-1.5 rounded-xl bg-foreground px-3.5 py-2 text-xs font-bold text-background disabled:opacity-40"
             >
               {run.isPending ? (
                 <Loader2 className="size-3.5 animate-spin" />
