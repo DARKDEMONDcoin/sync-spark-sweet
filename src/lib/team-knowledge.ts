@@ -86,6 +86,12 @@ export const employeeDirectory: Record<
       { provider: "whatsapp", label: "واتساب", why: "متابعة العملاء في المنطقة العربية" },
       { provider: "pipedrive", label: "Pipedrive", why: "بديل HubSpot" },
       { provider: "salesforce", label: "Salesforce", why: "CRM للشركات الكبيرة" },
+      { provider: "stripe", label: "Stripe", why: "إصدار الفواتير وروابط الدفع للصفقات" },
+      { provider: "mailchimp", label: "Mailchimp", why: "حملات البريد لقوائم العملاء" },
+      { provider: "intercom", label: "Intercom", why: "محادثات العملاء والمتابعة" },
+      { provider: "twilio", label: "Twilio", why: "رسائل SMS للمتابعة" },
+      { provider: "airtable", label: "Airtable", why: "قواعد بيانات العملاء والصفقات" },
+
     ],
     handsOffTo:
       "صفحات الهبوط ومحتوى الموقع → نور. تصميم العرض التقديمي → دانة. تحليل القمع بالأرقام → آدم.",
