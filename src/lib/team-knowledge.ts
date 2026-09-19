@@ -143,6 +143,8 @@ export const employeeDirectory: Record<
       { provider: "meta-ads", label: "إعلانات Meta", why: "أداء الحملات والإنفاق" },
       { provider: "google-ads", label: "إعلانات Google", why: "أداء حملات البحث" },
       { provider: "search-console", label: "Google Search Console", why: "بيانات البحث العضوي" },
+      { provider: "sheets", label: "Google Sheets", why: "تسجيل المؤشرات وقراءة جداول الأرقام" },
+
     ],
     handsOffTo: "تنفيذ التوصيات على المحتوى → نور أو سِراج. تصميم الإعلان → دانة.",
   },
