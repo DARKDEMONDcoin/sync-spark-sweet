@@ -311,10 +311,10 @@ export function extractImagePrompt(markdown: string): string | null {
 export function stripImagePrompt(markdown: string): string {
   return markdown
     .replace(
-      /^[ \t]*[*_#>\s]*(?:image\s*prompt|prompt|وصف الصورة|برومبت الصورة|برومبت|الوصف البصري)\s*[:：\-–]?[^\n]*(?:\n(?!\s*(?:#{1,6}\s|\*\*|[-*]\s))[^\n]*)*\n?/gim,
-      "",
+      /^[ \t]*[*_#> \t]*(?:image[ \t]*prompt|prompt|وصف الصورة|برومبت الصورة|برومبت|الوصف البصري)[ \t]*[:：\-–]?[ \t*]*([^\n]*)(?:\n[ \t]*```[^\n]*\n([\s\S]*?)```|\n([A-Za-z][^\n]{40,900}))?/gim,
+      (match, inline: string, block: string | undefined, next: string | undefined) =>
+        /[a-z]{4,}/i.test([inline, block, next].filter(Boolean).join(" ")) ? "" : match,
     )
-    .replace(/```[a-z]*\n(?![\s\S]{0,400}?[\u0600-\u06FF])[\s\S]*?```\n?/gi, "")
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
