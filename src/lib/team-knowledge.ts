@@ -5,6 +5,7 @@
  * تُحقن في تعليمات كل موظف (المحادثة الحرة + تنفيذ القدرات + الجدولة) حتى يكون
  * كل موظف على دراية كاملة بالفريق والمنصة، ويحيل الطلبات لزميله الصحيح بدل الاعتذار.
  */
+import { authorityBlock } from "./authority";
 import { complianceBlock } from "./compliance";
 import { platformLimitsBlock } from "./platform-limits";
 
@@ -348,8 +349,9 @@ export function sharedSystemBlocks(params: {
   dialect?: string | null | undefined;
 }): string[] {
   return [
+    authorityBlock,
     masteryStandard,
-    operatingPrinciples,
+    operatingPrinciples(params.employeeId),
     languageBlock(params.country, params.dialect),
     businessProfileBlock(params.profile, params.website, params.country),
     teamDirectoryBlock(params.employeeId),
@@ -357,6 +359,6 @@ export function sharedSystemBlocks(params: {
     platformLimitsBlock(params.employeeId),
     complianceBlock(params.employeeId),
     integrationPolicyBlock(params.employeeId, params.connected),
-    `## المنصة\n${platformMap}`,
+    `## المنصة\n${platformMapFor(params.employeeId)}`,
   ].filter(Boolean);
 }

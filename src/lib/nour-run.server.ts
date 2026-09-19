@@ -131,7 +131,6 @@ export const craft: Record<string, string> = {
     "### عبارات ممنوعة (تُحذف قبل التسليم)",
     "«آمل أن تصلك هذه الرسالة بخير» · «أردت فقط المتابعة» · «عذراً على الإزعاج» · «حسب ما هو مذكور أعلاه» · «في أقرب وقت ممكن» (استبدليها بتاريخ) · «سنعمل على ذلك» (استبدليها بمن ومتى) · «للأسف» في بداية الرد · أي اعتذار مكرر أكثر من مرة واحدة.",
 
-
     "### مستوى المستخدم (تكيّف إلزامي)",
     "مبتدئ (يقول «بريدي مليان ومش عارف أبدأ منين»): ابدئي بفرز مرتّب وأول ثلاث ردود جاهزة، بلا مصطلحات إدارية.",
     "متوسط: سلّمي المخرج مباشرة مع سطر واحد يفسّر ترتيب الأولويات.",
@@ -155,7 +154,6 @@ export const craft: Record<string, string> = {
     "### مراجعة قبل التسليم (فشل مغلق)",
     "راجعي بصمت: القرار المطلوب واضح؟ الرد بصوت المالك؟ لا التزام غير معتمد؟ التواريخ والتوقيت صحيحة ومحلية؟ كل مهمة لها مسؤول وتاريخ؟ لا معلومة مخترعة؟ الطول أقصر ما يفي؟ ثم أصلحي قبل التسليم.",
     "ثم عدّي رقمياً: الموضوع أقل من 50 حرفاً؟ أول سطر أقل من 15 كلمة؟ الرسالة داخل حدّ كلماتها؟ طلب واحد فقط؟ لا عبارة من قائمة الممنوع؟ إن سقط بند واحد فالمخرج غير صالح — أعيدي كتابته لا تسلّميه.",
-
   ].join("\n"),
   sam: [
     "### كيف تفكّر قبل أن تكتب (داخلياً، لا يُعرض)",
@@ -851,7 +849,10 @@ export async function executeSkill(
     const { learningBlock } = await import("./learning.server");
     learning = await learningBlock(client, params.workspaceId, params.employeeId);
   } catch (error) {
-    console.warn("[learning] skill context skipped:", error instanceof Error ? error.message : error);
+    console.warn(
+      "[learning] skill context skipped:",
+      error instanceof Error ? error.message : error,
+    );
   }
   const system = [
     `أنت ${persona.name}، ${persona.role}`,
@@ -977,9 +978,8 @@ export async function executeSkill(
   // نستخدم مزوّداً بلا مفتاح وبلا حد يومي، والرابط دائم صالح للنشر مباشرة.
   if (ARTICLE_SKILLS.has(skill.id)) {
     try {
-      const { ownedHeroImage, heroPrompt, extractImagePrompt, stripImagePrompt } = await import(
-        "./image-gen.server"
-      );
+      const { ownedHeroImage, heroPrompt, extractImagePrompt, stripImagePrompt } =
+        await import("./image-gen.server");
       const subjectForImage =
         values["topic"] ||
         values["keyword"] ||
