@@ -627,7 +627,7 @@ export function MediaStudio({
             <button
               type="button"
               onClick={addLink}
-              className="rounded-xl border border-border px-3 py-2 text-xs font-bold transition-colors hover:bg-secondary"
+              className="inline-flex min-h-10 shrink-0 items-center rounded-xl border border-border px-3 py-2 text-xs font-bold transition-colors hover:bg-secondary"
             >
               إضافة
             </button>
