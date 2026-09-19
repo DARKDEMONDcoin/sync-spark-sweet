@@ -390,7 +390,7 @@ function CalendarPage() {
                   const d = new Date();
                   setCursor(new Date(d.getFullYear(), d.getMonth(), 1));
                 }}
-                className="mt-1 text-xs font-bold text-primary hover:underline"
+                className="mt-1 inline-flex min-h-9 items-center justify-center px-2 text-xs font-bold text-primary hover:underline"
               >
                 العودة إلى اليوم
               </button>
