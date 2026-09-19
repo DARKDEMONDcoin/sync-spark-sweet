@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -26,7 +27,7 @@ export function PublishToWordPress({ workspaceId, body }: { workspaceId: string;
 
   if (link !== null) {
     return (
-      <p className="mt-2 flex items-center gap-2 text-xs font-bold text-jade-deep">
+      <p className="mt-2 flex flex-wrap items-center gap-2 text-xs font-bold text-jade-deep">
         <Check className="size-3.5" /> حُفظت مسودة على ووردبريس
         {link ? (
           <a href={link} target="_blank" rel="noreferrer" className="underline">
@@ -39,13 +40,14 @@ export function PublishToWordPress({ workspaceId, body }: { workspaceId: string;
 
   return (
     <div className="mt-2">
-      <button
+      <Button
+        variant="outline"
         onClick={() => {
           setError(null);
           send.mutate();
         }}
         disabled={send.isPending}
-        className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-bold hover:bg-secondary disabled:opacity-60"
+        className="inline-flex h-auto min-h-10 max-w-full whitespace-normal items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-bold hover:bg-secondary disabled:opacity-60"
       >
         {send.isPending ? (
           <Loader2 className="size-3.5 animate-spin" />
@@ -53,8 +55,10 @@ export function PublishToWordPress({ workspaceId, body }: { workspaceId: string;
           <Upload className="size-3.5" />
         )}
         أرسل كمسودة إلى ووردبريس
-      </button>
-      {error ? <p className="mt-1.5 text-xs font-semibold text-coral">{error}</p> : null}
+      </Button>
+      {error ? (
+        <p className="mt-1.5 [overflow-wrap:anywhere] text-xs font-semibold text-coral">{error}</p>
+      ) : null}
     </div>
   );
 }
