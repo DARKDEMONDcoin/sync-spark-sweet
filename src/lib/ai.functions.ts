@@ -937,7 +937,12 @@ export async function runEmployeeTurn(
         // لا نفرض المنصة إلا على مخرج بلا منصة، حتى لا تُدمج خطة متعددة المنصات في منصة واحدة.
         .map((d) => (d.channel ? d : askedTargets[0] ? { ...d, channel: askedTargets[0] } : d));
       // النموذج قد يعيد بنية خاصة به (خطة أسبوع، عدة منشورات) — نلتقط المخرجات منها بدل عرض JSON خام.
-      if (!deliverables.length) deliverables = harvestDeliverables(parsed).slice(0, 14);
+      if (!deliverables.length)
+        deliverables = harvestDeliverables(parsed)
+          .slice(0, 14)
+          // نفس قاعدة المنصة تُطبَّق على المخرجات المُلتقطة، وإلا نُسبت لمنصة الموظف الافتراضية خطأً.
+          .map((d) => (d.channel ? d : askedTargets[0] ? { ...d, channel: askedTargets[0] } : d));
+
       const nc = items
         .map((x) => x.needs_connection)
         .find((n) => n && typeof n === "object" && typeof n.provider === "string");
@@ -984,8 +989,22 @@ export async function runEmployeeTurn(
         } catch {
           reply = m[1].replace(/\\n/g, "\n").replace(/\\"/g, '"');
         }
+      } else {
+        // لا يوجد حقل reply أصلاً: ننظّف أي بقايا JSON قبل العرض حتى لا يرى المستخدم بنية تقنية.
+        const stripped = raw
+          .replace(/^```(?:json)?\s*/i, "")
+          .replace(/```\s*$/i, "")
+          .replace(/^\s*[{[]\s*/, "")
+          .replace(/\s*[}\]]\s*$/, "")
+          .replace(/^\s*"[a-z_]+"\s*:\s*/gim, "")
+          .replace(/",?\s*$/gm, "")
+          .replace(/\\n/g, "\n")
+          .replace(/\\"/g, '"')
+          .trim();
+        if (stripped.length > 20) reply = stripped;
       }
     }
+
 
     // في المحادثة الحرة (سؤال/دردشة) لا مخرجات ولا طلبات ربط — إجابة فقط.
     if (intent !== "work") {

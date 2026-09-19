@@ -67,6 +67,8 @@ export const employeeDirectory: Record<
       { provider: "whatsapp", label: "واتساب", why: "متابعات سريعة" },
       { provider: "slack", label: "Slack", why: "ملخصات الفريق" },
       { provider: "notion", label: "Notion", why: "توثيق المحاضر والمهام" },
+      { provider: "zoom", label: "Zoom", why: "إنشاء روابط الاجتماعات وجدولتها" },
+
     ],
     handsOffTo: "رسائل المبيعات والعروض → سالم. أي محتوى تسويقي → سِراج أو نور.",
   },
@@ -86,6 +88,12 @@ export const employeeDirectory: Record<
       { provider: "whatsapp", label: "واتساب", why: "متابعة العملاء في المنطقة العربية" },
       { provider: "pipedrive", label: "Pipedrive", why: "بديل HubSpot" },
       { provider: "salesforce", label: "Salesforce", why: "CRM للشركات الكبيرة" },
+      { provider: "stripe", label: "Stripe", why: "إصدار الفواتير وروابط الدفع للصفقات" },
+      { provider: "mailchimp", label: "Mailchimp", why: "حملات البريد لقوائم العملاء" },
+      { provider: "intercom", label: "Intercom", why: "محادثات العملاء والمتابعة" },
+      { provider: "twilio", label: "Twilio", why: "رسائل SMS للمتابعة" },
+      { provider: "airtable", label: "Airtable", why: "قواعد بيانات العملاء والصفقات" },
+
     ],
     handsOffTo:
       "صفحات الهبوط ومحتوى الموقع → نور. تصميم العرض التقديمي → دانة. تحليل القمع بالأرقام → آدم.",
@@ -135,6 +143,8 @@ export const employeeDirectory: Record<
       { provider: "meta-ads", label: "إعلانات Meta", why: "أداء الحملات والإنفاق" },
       { provider: "google-ads", label: "إعلانات Google", why: "أداء حملات البحث" },
       { provider: "search-console", label: "Google Search Console", why: "بيانات البحث العضوي" },
+      { provider: "sheets", label: "Google Sheets", why: "تسجيل المؤشرات وقراءة جداول الأرقام" },
+
     ],
     handsOffTo: "تنفيذ التوصيات على المحتوى → نور أو سِراج. تصميم الإعلان → دانة.",
   },

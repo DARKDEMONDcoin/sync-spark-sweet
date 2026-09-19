@@ -540,12 +540,13 @@ export async function runChatTools(
     }
 
     // كل أدوات نور تعمل بالتوازي داخل سقف زمني واحد — لا تُلغى أداة لأن سابقتها تأخّرت.
+    // السقف حدّ أقصى لا أرضية: نأخذ المتبقي من الميزانية، بحد أدنى 5ث وحد أقصى 25ث.
+    const raceCapMs = Math.min(Math.max(left(), 5_000), 25_000);
     const settled = await Promise.race([
       Promise.all(jobs),
-      new Promise<(ChatToolResult | null)[]>((resolve) =>
-        setTimeout(() => resolve([]), Math.max(left(), 30_000)),
-      ),
+      new Promise<(ChatToolResult | null)[]>((resolve) => setTimeout(() => resolve([]), raceCapMs)),
     ]);
+
     for (const r of settled) if (r) out.push(r);
   }
 

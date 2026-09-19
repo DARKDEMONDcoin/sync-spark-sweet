@@ -452,7 +452,25 @@ export async function generateCalendarPost(
   const out = extractJson<{ caption?: string; image_prompt?: string }>(raw);
   const caption = (out?.caption ?? "").trim();
   if (!caption) throw new Error("لم يخرج نص منشور صالح.");
-  const body = adaptForProvider(post.provider, caption);
+  let body = adaptForProvider(post.provider, caption);
+  // نفس حاجز الجودة الحتمي المستخدم في المحادثة: هوك، طول المنصة، دعوة فعل، هاشتاقات، كلمات ممنوعة.
+  try {
+    const { autofixPosts } = await import("./post-autofix.server");
+    const [fixed] = await autofixPosts(
+      "",
+      [{ title: meta.title ?? "منشور", channel: post.provider, body, image_prompt: out?.image_prompt ?? "" }],
+      {
+        bannedWords: (ctx.ws as { banned_words?: string[] | null }).banned_words ?? [],
+        dialect,
+        hasMedia: opts.withImage,
+      },
+    );
+    const improved = typeof fixed?.body === "string" ? fixed.body.trim() : "";
+    if (improved.length > 20) body = adaptForProvider(post.provider, improved);
+  } catch (e) {
+    console.warn("[calendar] autofix skipped:", e instanceof Error ? e.message : e);
+  }
+
 
   let imageUrl: string | null = post.image_url;
   if (opts.withImage && !imageUrl) {
