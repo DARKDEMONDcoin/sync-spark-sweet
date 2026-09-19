@@ -110,10 +110,11 @@ export function PostQuality({
         type="button"
         variant="ghost"
         onClick={() => setOpen((v) => !v)}
-        className="h-auto w-full justify-between gap-3 rounded-xl p-0 text-right hover:bg-transparent"
+        aria-expanded={open}
+        className="grid h-auto min-h-11 w-full grid-cols-[minmax(0,1fr)_auto] gap-3 whitespace-normal rounded-xl p-0 text-start hover:bg-transparent"
       >
         <span className="flex min-w-0 items-center gap-3">
-          <span className={`post-quality-score ${scoreRing(weakest.score)}`}>
+          <span className={`post-quality-score shrink-0 ${scoreRing(weakest.score)}`}>
             <span>{weakest.score}</span>
             <small>/100</small>
           </span>
