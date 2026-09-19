@@ -303,7 +303,7 @@ export function MediaStudio({
                 type="button"
                 aria-label="إزالة المرفق"
                 onClick={() => onAttachmentsChange(attachments.filter((x) => x.url !== a.url))}
-                className="absolute inset-x-0 bottom-0 bg-foreground/80 py-0.5 text-center text-background opacity-0 transition-opacity group-hover:opacity-100"
+                className="absolute inset-x-0 bottom-0 grid min-h-6 place-items-center bg-foreground/80 text-background opacity-0 transition-opacity focus-visible:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100"
               >
                 <X className="mx-auto size-3" />
               </button>
