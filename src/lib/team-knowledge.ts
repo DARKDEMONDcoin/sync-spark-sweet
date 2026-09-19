@@ -5,6 +5,8 @@
  * تُحقن في تعليمات كل موظف (المحادثة الحرة + تنفيذ القدرات + الجدولة) حتى يكون
  * كل موظف على دراية كاملة بالفريق والمنصة، ويحيل الطلبات لزميله الصحيح بدل الاعتذار.
  */
+import { complianceBlock } from "./compliance";
+import { platformLimitsBlock } from "./platform-limits";
 
 export type EmployeeId = "sonny" | "eva" | "sam" | "nour" | "dana" | "adam";
 
