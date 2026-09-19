@@ -30,8 +30,7 @@ export function playbookFor(employeeId: string, message?: string): string {
   const adsRelevant =
     (employeeId === "sonny" || employeeId === "adam" || employeeId === "dana" || employeeId === "sam") &&
     // بلا رسالة: لا نحقن دليل الإعلانات لأحد؛ يُحقن فقط عندما يكون الطلب إعلانياً فعلاً.
-    Boolean(message) &&
-    isAdsRequest(message!);
+    (message ? isAdsRequest(message) : employeeId === "sonny");
   if (adsRelevant) blocks.push(adsPlaybookBlock());
   return blocks.filter(Boolean).join("\n\n");
 }
