@@ -1267,7 +1267,7 @@ function ChatView({
 
                         <div
                           className={cn(
-                            "mt-1.5 flex items-center gap-2 text-[0.7rem]",
+                            "mt-1.5 flex flex-wrap items-center gap-2 text-[0.7rem]",
                             isUser ? "text-background/60" : "text-muted-foreground",
                           )}
                         >
@@ -1275,7 +1275,7 @@ function ChatView({
                             {timeOf(m.created_at)}
                           </span>
                           {!isUser ? (
-                            <span className="ms-auto opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
+                            <span className="ms-auto min-w-0 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100 focus-within:opacity-100 [@media(hover:none)]:opacity-100 [&_button]:min-h-9">
                               <MessageActions
                                 text={body}
                                 disabled={busy}
