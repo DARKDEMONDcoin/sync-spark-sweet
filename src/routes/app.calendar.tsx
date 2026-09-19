@@ -627,7 +627,7 @@ function CalendarPage() {
               <Link
                 to="/app/chat/$id"
                 params={{ id: "sonny" }}
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary"
+                className="mt-4 inline-flex min-h-10 items-center gap-1.5 px-1 text-sm font-bold text-primary"
               >
                 تحدّث مع سِراج
               </Link>
