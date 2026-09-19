@@ -273,9 +273,7 @@ export function businessProfileBlock(
 export function languageBlock(country?: string | null, chosenDialect?: string | null): string {
   const c = (country ?? "").toLowerCase();
   const picked = (chosenDialect ?? "").trim();
-  const dialect =
-    picked ||
-    /egypt|مصر|eg\b/.test(c)
+  const detected = /egypt|مصر|eg\b/.test(c)
       ? "المصرية الخفيفة المفهومة"
       : /saudi|السعود|ksa|sa\b/.test(c)
         ? "السعودية البيضاء (نجدية معتدلة بلا مبالغة)"
