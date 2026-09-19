@@ -29,8 +29,9 @@ export function playbookFor(employeeId: string, message?: string): string {
   if (core) blocks.push(core);
   const adsRelevant =
     (employeeId === "sonny" || employeeId === "adam" || employeeId === "dana" || employeeId === "sam") &&
-    // بلا رسالة نُبقي دليل الإعلانات لسِراج (السلوك الافتراضي القديم).
-    (!message ? employeeId === "sonny" : isAdsRequest(message));
+    // بلا رسالة: لا نحقن دليل الإعلانات لأحد؛ يُحقن فقط عندما يكون الطلب إعلانياً فعلاً.
+    Boolean(message) &&
+    isAdsRequest(message!);
   if (adsRelevant) blocks.push(adsPlaybookBlock());
   return blocks.filter(Boolean).join("\n\n");
 }
