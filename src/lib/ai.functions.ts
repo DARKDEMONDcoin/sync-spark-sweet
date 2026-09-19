@@ -426,9 +426,8 @@ export async function runEmployeeTurn(
     const { expertMindBlock } = await import("./expert-mind");
 
     // الوعي اللحظي: الزمن الدقيق دائماً + بحث حيّ عن الأحداث الجارية عند الحاجة.
-    const { nowBlock, needsLiveFacts, liveFactsBlock, timezoneForCountry } = await import(
-      "./live-context.server"
-    );
+    const { nowBlock, needsLiveFacts, liveFactsBlock, timezoneForCountry } =
+      await import("./live-context.server");
     const timezone =
       (workspace as { timezone?: string | null }).timezone ?? timezoneForCountry(ws.country);
 
@@ -688,7 +687,9 @@ export async function runEmployeeTurn(
       teamActivity ? `## آخر ما أنجزه الفريق\n${teamActivity}` : "",
       research.block ? `${evidenceRules}\n\n## أدلة ميدانية (لحظية)\n${research.block}` : "",
       // بحث الموظف في مجاله (أو قاعدة الصدق إن تعذّر البحث).
-      fieldResearchBlock ? `${research.block ? "" : `${evidenceRules}\n\n`}${fieldResearchBlock}` : "",
+      fieldResearchBlock
+        ? `${research.block ? "" : `${evidenceRules}\n\n`}${fieldResearchBlock}`
+        : "",
       // الحقائق اللحظية آخر ما يقرأه النموذج قبل الكتابة: أعلى أولوية وتتقدّم على أي قاعدة تحفّظ.
       liveBlock
         ? `${liveBlock}\n\nهذه الكتلة أعلى سلطة في الرد: أي رقم أو تاريخ فيها مؤكد ورسمي، اذكره كما هو بالحرف. ممنوع قول «لا يوجد رقم مؤكد» عن رقم مذكور هنا.`
@@ -834,7 +835,13 @@ export async function runEmployeeTurn(
     // استراتيجي بتفكير أعمق — ذكاء أعلى حيث يستحق، وسرعة حيث لا يضيف التفكير شيئاً.
     const effort = effortFor(intent, data.message, longForm);
     const chatOptions = longForm
-      ? { json: true, timeoutMs: 75_000, maxTokens: 6000, budgetMs: 130_000, reasoningEffort: effort }
+      ? {
+          json: true,
+          timeoutMs: 75_000,
+          maxTokens: 6000,
+          budgetMs: 130_000,
+          reasoningEffort: effort,
+        }
       : {
           json: true,
           // التفكير الأعمق يحتاج وقتاً أطول قبل أوّل حرف — بلا هذا تُقطع الردود الاستراتيجية.
@@ -1005,7 +1012,6 @@ export async function runEmployeeTurn(
       }
     }
 
-
     // في المحادثة الحرة (سؤال/دردشة) لا مخرجات ولا طلبات ربط — إجابة فقط.
     if (intent !== "work") {
       deliverables = [];
@@ -1017,7 +1023,6 @@ export async function runEmployeeTurn(
     // وإعادة كتابة موجّهة لأي منشور ضعيف قبل عرضه — بطاقة النشر مشتركة بين كل الموظفين،
     // فيجب أن تكون معايير جودة المنشور واحدة لهم جميعاً لا لسِراج وحده.
     if (deliverables.length) {
-
       try {
         const { autofixPosts } = await import("./post-autofix.server");
         const before = deliverables.map((d) => d.body ?? "");
@@ -1200,11 +1205,12 @@ export async function runEmployeeTurn(
           if (old && reply.includes(old)) reply = reply.replace(old, fix.output);
         });
       } catch (error) {
-        console.warn("[judge] per-deliverable skipped:", error instanceof Error ? error.message : error);
+        console.warn(
+          "[judge] per-deliverable skipped:",
+          error instanceof Error ? error.message : error,
+        );
       }
     }
-
-
 
     // بعد حَكَم الجودة أيضاً: لا يخرج أي فراغ نائب إلى المستخدم.
     reply = fillPlaceholders(reply, workspace.name, ws.website ?? null, brandProducts);
