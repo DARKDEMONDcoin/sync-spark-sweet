@@ -446,8 +446,9 @@ export function MediaStudio({
                   key={a.id}
                   type="button"
                   onClick={() => onAspectChange(a.id)}
+                  aria-pressed={aspect === a.id}
                   className={cn(
-                    "rounded-lg px-2 py-1 text-[0.68rem] font-bold transition-colors",
+                    "inline-flex min-h-9 items-center rounded-lg px-2.5 py-1 text-[0.68rem] font-bold transition-colors",
                     aspect === a.id
                       ? "bg-foreground text-background"
                       : "text-muted-foreground hover:bg-secondary",
@@ -463,8 +464,10 @@ export function MediaStudio({
                   key={n}
                   type="button"
                   onClick={() => setCount(n)}
+                  aria-pressed={count === n}
+                  aria-label={`عدد الصور ${n}`}
                   className={cn(
-                    "size-7 rounded-lg text-[0.68rem] font-bold transition-colors",
+                    "size-9 rounded-lg text-[0.68rem] font-bold transition-colors",
                     count === n
                       ? "bg-foreground text-background"
                       : "text-muted-foreground hover:bg-secondary",
@@ -477,8 +480,9 @@ export function MediaStudio({
             <button
               type="button"
               onClick={() => setLiteral((v) => !v)}
+              aria-pressed={literal}
               className={cn(
-                "inline-flex items-center gap-1 rounded-xl border px-2.5 py-1.5 text-[0.68rem] font-bold transition-colors",
+                "inline-flex min-h-9 items-center gap-1 rounded-xl border px-2.5 py-1.5 text-[0.68rem] font-bold transition-colors",
                 literal ? "border-primary/50 bg-primary/10" : "border-border text-muted-foreground",
               )}
               title="مطابقة حرفية لوصفك بدل إعادة صياغته"
@@ -493,7 +497,8 @@ export function MediaStudio({
                 setError(null);
                 run.mutate();
               }}
-              className="ms-auto inline-flex items-center gap-1.5 rounded-xl bg-foreground px-3.5 py-2 text-xs font-bold text-background disabled:opacity-40"
+              aria-disabled={!workspaceId || prompt.trim().length < 3 || run.isPending}
+              className="ms-auto inline-flex min-h-10 items-center gap-1.5 rounded-xl bg-foreground px-3.5 py-2 text-xs font-bold text-background disabled:opacity-40"
             >
               {run.isPending ? (
                 <Loader2 className="size-3.5 animate-spin" />
@@ -544,7 +549,8 @@ export function MediaStudio({
                   setError(null);
                   sync.mutate();
                 }}
-                className="ms-auto inline-flex items-center gap-1 rounded-lg border border-border px-2.5 py-1 text-[0.68rem] font-bold transition-colors hover:bg-secondary disabled:opacity-40"
+                aria-disabled={!workspaceId || sync.isPending}
+                className="ms-auto inline-flex min-h-9 items-center gap-1 rounded-lg border border-border px-2.5 py-1 text-[0.68rem] font-bold transition-colors hover:bg-secondary disabled:opacity-40"
               >
                 {sync.isPending ? (
                   <Loader2 className="size-3 animate-spin" />
@@ -621,7 +627,7 @@ export function MediaStudio({
             <button
               type="button"
               onClick={addLink}
-              className="rounded-xl border border-border px-3 py-2 text-xs font-bold transition-colors hover:bg-secondary"
+              className="inline-flex min-h-10 shrink-0 items-center rounded-xl border border-border px-3 py-2 text-xs font-bold transition-colors hover:bg-secondary"
             >
               إضافة
             </button>
