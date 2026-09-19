@@ -127,10 +127,13 @@ export async function recordDecisions(
 ): Promise<number> {
   if (!params.drafts.length) return 0;
 
+  // «الاستبدال» يقتصر على قرارات الموظف نفسه: قرار زميل في مجال آخر لا يُلغى
+  // لمجرد تشابه العنوان (مثل «الميزانية» عند سالم وآدم).
   const { data: existing } = await client
     .from("decisions")
     .select("id, title, decision")
     .eq("workspace_id", params.workspaceId)
+    .eq("employee_id", params.employeeId)
     .eq("status", "active")
     .order("created_at", { ascending: false })
     .limit(120);
@@ -140,6 +143,7 @@ export async function recordDecisions(
     const twin = (existing ?? []).find((row) =>
       similar(`${row.title} ${row.decision}`, `${draft.title} ${draft.decision}`),
     );
+
     const { data: inserted } = await client
       .from("decisions")
       .insert({
