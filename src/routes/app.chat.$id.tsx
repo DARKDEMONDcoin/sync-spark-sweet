@@ -181,7 +181,7 @@ function MessageActions({
     URL.revokeObjectURL(url);
   };
   return (
-    <span className="flex flex-wrap items-center gap-0.5">
+    <span className="flex flex-wrap items-center gap-1.5">
       <CopyButton text={text} />
       <button type="button" onClick={() => void share()} className={btn} aria-label="مشاركة">
         <Share2 className="size-3" /> {shared ? "نُسخ للمشاركة" : "مشاركة"}
